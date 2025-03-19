@@ -34,8 +34,7 @@ const StoreTemplate = ({
               <PaginatedProducts
                 sortBy={sort}
                 page={pageNumber}
-                countryCode={countryCode}
-              />
+                countryCode={countryCode} customer={null} />
             </Suspense>
           </div>
         </div>

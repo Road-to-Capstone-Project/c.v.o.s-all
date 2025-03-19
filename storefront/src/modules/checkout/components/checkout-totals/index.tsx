@@ -26,7 +26,7 @@ const CheckoutTotals: React.FC<{
       <div className="flex flex-col gap-y-2 txt-medium text-ui-fg-subtle ">
         <div className="flex items-center justify-between">
           <Text className="flex gap-x-1 items-center">
-            Subtotal (excl. shipping and taxes)
+            Subtotal (excl. shipping and incl. taxes)
           </Text>
           <Text
             data-testid="cart-item-subtotal"
@@ -54,12 +54,12 @@ const CheckoutTotals: React.FC<{
             {convertToLocale({ amount: shipping_total ?? 0, currency_code })}
           </Text>
         </div>
-        <div className="flex justify-between">
+        {/* <div className="flex justify-between">
           <Text className="flex gap-x-1 items-center ">Taxes</Text>
           <Text data-testid="cart-taxes" data-value={tax_total || 0}>
             {convertToLocale({ amount: tax_total ?? 0, currency_code })}
           </Text>
-        </div>
+        </div> */}
         {!!gift_card_total && (
           <div className="flex items-center justify-between">
             <Text>Gift card</Text>

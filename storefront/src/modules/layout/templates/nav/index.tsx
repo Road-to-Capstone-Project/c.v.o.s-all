@@ -40,7 +40,7 @@ export function NavigationHeader() {
             <div className="relative mr-2 hidden small:inline-flex">
               <input
                 type="text"
-                placeholder="Search for products"
+                placeholder="Search for gaming products"
                 className="bg-gray-100 text-zinc-900 px-4 py-2 rounded-full pr-10 shadow-borders-base hidden small:inline-block"
               />
             </div>

@@ -24,7 +24,8 @@ const ContactDetailsForm = ({
         email: cart?.email,
         invoice_recipient: cart?.metadata?.invoice_recipient,
         cost_center: cart?.metadata?.cost_center,
-        requisition_number: cart?.metadata?.requisition_number,
+        // requisition_number: cart?.metadata?.requisition_number,
+        alternative_phone_number: cart?.metadata?.alternative_phone_number,
         door_code: cart?.metadata?.door_code,
         notes: cart?.metadata?.notes,
       }))
@@ -54,35 +55,36 @@ const ContactDetailsForm = ({
         data-testid="email-input"
         className="small:col-span-2"
       />
-      <Input
+      {/* <Input
         label="Invoice recipient"
         name="invoice_recipient"
         autoComplete="family-name"
         value={formData["invoice_recipient"]}
         onChange={handleChange}
         data-testid="invoice-recipient-input"
-      />
-      <Input
+      /> */}
+      {/* <Input
         label="Cost center"
         name="cost_center"
         value={formData["cost_center"]}
         onChange={handleChange}
         data-testid="cost-center-input"
-      />
+      /> */}
       <Input
-        label="Requisition number"
-        name="requisition_number"
-        value={formData["requisition_number"]}
+        label="Alternative phone number"
+        name="alternative_phone_number"
+        type="tel"
+        value={formData["alternative_phone_number"]}
         onChange={handleChange}
-        data-testid="requisition-number-input"
+        data-testid="alternative-phone-number-input"
       />
-      <Input
+      {/* <Input
         label="Door code/goods mark"
         name="door_code"
         value={formData["door_code"]}
         onChange={handleChange}
         data-testid="door-code-input"
-      />
+      /> */}
       <div className="col-span-2">
         <Input
           label="Notes"

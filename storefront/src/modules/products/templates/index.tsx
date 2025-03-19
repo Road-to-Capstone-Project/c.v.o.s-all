@@ -39,7 +39,7 @@ const ProductTemplate: React.FC<ProductTemplateProps> = ({
           >
             <ProductActionsWrapper id={product.id} region={region} />
           </Suspense>
-          {/* <ProductFacts product={product} /> */}
+          <ProductFacts product={product} />
         </div>
       </div>
       <div className="content-container">

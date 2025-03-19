@@ -37,7 +37,7 @@ const Register = ({ setCurrentView, regions }: Props) => {
       <Text className="text-4xl text-neutral-950 text-left mb-4">
         Create your
         <br />
-        company account.
+        shopping account.
       </Text>
       <form className="w-full flex flex-col" action={formAction}>
         <div className="flex flex-col w-full gap-y-4">
@@ -67,14 +67,6 @@ const Register = ({ setCurrentView, regions }: Props) => {
             className="bg-white"
           />
           <Input
-            label="Company name"
-            name="company_name"
-            required
-            autoComplete="organization"
-            data-testid="company-name-input"
-            className="bg-white"
-          />
-          <Input
             label="Password"
             name="password"
             required
@@ -84,35 +76,12 @@ const Register = ({ setCurrentView, regions }: Props) => {
             className="bg-white"
           />
           <Input
-            label="Company address"
-            name="company_address"
+            label="Phone number"
+            name="phone"
             required
-            autoComplete="address"
-            data-testid="company-address-input"
-            className="bg-white"
-          />
-          <Input
-            label="Company city"
-            name="company_city"
-            required
-            autoComplete="city"
-            data-testid="company-city-input"
-            className="bg-white"
-          />
-          <Input
-            label="Company state"
-            name="company_state"
-            required
-            autoComplete="state"
-            data-testid="company-state-input"
-            className="bg-white"
-          />
-          <Input
-            label="Company zip"
-            name="company_zip"
-            required
-            autoComplete="postal-code"
-            data-testid="company-zip-input"
+            autoComplete="tel"
+            type="tel"
+            data-testid="phone-input"
             className="bg-white"
           />
           <Select
@@ -132,7 +101,39 @@ const Register = ({ setCurrentView, regions }: Props) => {
               ))}
             </Select.Content>
           </Select>
-          <Select
+          {/* <Input
+            label="Company name"
+            name="company_name"
+            required
+            autoComplete="organization"
+            data-testid="company-name-input"
+            className="bg-white"
+          /> */}
+          {/* <Input
+            label="Company city"
+            name="company_city"
+            required
+            autoComplete="city"
+            data-testid="company-city-input"
+            className="bg-white"
+          /> */}
+          {/* <Input
+            label="Company state"
+            name="company_state"
+            required
+            autoComplete="state"
+            data-testid="company-state-input"
+            className="bg-white"
+          />
+          <Input
+            label="Company zip"
+            name="company_zip"
+            required
+            autoComplete="postal-code"
+            data-testid="company-zip-input"
+            className="bg-white"
+          /> */}
+          {/* <Select
             name="currency_code"
             required
             autoComplete="currency"
@@ -148,7 +149,7 @@ const Register = ({ setCurrentView, regions }: Props) => {
                 </Select.Item>
               ))}
             </Select.Content>
-          </Select>
+          </Select> */}
         </div>
         <div className="border-b border-neutral-200 my-6" />
         <ErrorMessage error={message} data-testid="register-error" />

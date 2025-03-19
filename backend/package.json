@@ -14,7 +14,7 @@
   ],
   "scripts": {
     "build": "medusa build",
-    "seed": "medusa exec ./src/scripts/another-seed.ts",
+    "seed": "medusa exec ./src/scripts/business-seed.ts",
     "start": "medusa start",
     "dev": "medusa develop",
     "test:integration:http": "TEST_TYPE=integration:http NODE_OPTIONS=--experimental-vm-modules jest --silent=false --runInBand --forceExit",
@@ -31,6 +31,9 @@
     "@mikro-orm/migrations": "6.4.3",
     "@mikro-orm/postgresql": "6.4.3",
     "awilix": "^8.0.1",
+    "decode": "^0.3.0",
+    "jwt": "^0.2.0",
+    "jwt-decode": "^4.0.0",
     "medusa-b2b-starter": "file:",
     "pg": "^8.13.0",
     "zod": "3.22.4"

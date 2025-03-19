@@ -15,6 +15,7 @@ type PaginatedProductsParams = {
   id?: string[]
   order?: string
   customer_group_id?: string
+  fields?: string
 }
 
 export default async function PaginatedProducts({
@@ -35,7 +36,7 @@ export default async function PaginatedProducts({
   customer: B2BCustomer | null
 }) {
   const queryParams: PaginatedProductsParams = {
-    limit: 12,
+    limit: 12, fields: "*variants,*variants.calculated_price,*variants.inventory_quantity",
   }
 
   if (collectionId) {

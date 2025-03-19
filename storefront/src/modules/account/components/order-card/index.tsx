@@ -1,14 +1,23 @@
 import { convertToLocale } from "@lib/util/money"
 import { HttpTypes } from "@medusajs/types"
-import { Button, clx, Container } from "@medusajs/ui"
+import { Button, clx, Container, StatusBadge } from "@medusajs/ui"
 import LocalizedClientLink from "@modules/common/components/localized-client-link"
 import Image from "next/image"
 import { useMemo } from "react"
 import CalendarIcon from "../../../common/icons/calendar"
 import DocumentIcon from "../../../common/icons/document"
+import OrderStatusBadge from "@modules/common/components/order-status-badge"
 
 type OrderCardProps = {
   order: HttpTypes.StoreOrder
+}
+
+const orderStatusList = {
+  "authorized-not_fulfilled": ['blue', 'Pending'],
+  "captured": ['green', 'Payment captured'],
+  "canceled": ['red', 'Canceled'],
+  "delivered": ['purple', 'Delivered'],
+  "shipped": ['orange', 'Shipping'],
 }
 
 const OrderCard = ({ order }: OrderCardProps) => {
@@ -20,6 +29,8 @@ const OrderCard = ({ order }: OrderCardProps) => {
       }, 0) ?? 0
     )
   }, [order])
+  const [orderStatusColor, orderStatus] = `${order.payment_status}-${order.fulfillment_status}` === 'authorized-not_fulfilled' ? orderStatusList['authorized-not_fulfilled'] : order.fulfillment_status === 'delivered' ? orderStatusList['delivered'] : order.payment_status === 'canceled' ? orderStatusList['canceled'] : order.fulfillment_status === 'shipped' ? orderStatusList['shipped'] : orderStatusList['captured']
+
 
   return (
     <>
@@ -76,6 +87,10 @@ const OrderCard = ({ order }: OrderCardProps) => {
             <DocumentIcon className="inline-block mr-1" />
             <span data-testid="order-display-id">#{order.display_id}</span>
           </div>
+          <div className="flex items-center text-small-regular">
+            {/* <StatusBadge className="flex flex-row" color={orderStatusColor}>{orderStatus}</StatusBadge> */}
+            <OrderStatusBadge order={order} />
+          </div>
         </div>
 
         <div className="flex gap-x-4 small:divide-x divide-gray-200 small:justify-normal justify-between w-full small:w-auto">
@@ -87,9 +102,8 @@ const OrderCard = ({ order }: OrderCardProps) => {
               })}
             </span>
             {"·"}
-            <span className="px-2">{`${numberOfLines} ${
-              numberOfLines > 1 ? "items" : "item"
-            }`}</span>
+            <span className="px-2">{`${numberOfLines} ${numberOfLines > 1 ? "items" : "item"
+              }`}</span>
           </div>
 
           <div className="flex items-center gap-x-2 pl-4">

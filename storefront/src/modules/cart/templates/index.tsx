@@ -13,10 +13,11 @@ import Summary from "./summary"
 const CartTemplate = ({ customer }: { customer: B2BCustomer | null }) => {
   const { cart } = useCart()
 
-  const spendLimitExceeded = useMemo(
-    () => checkSpendingLimit(cart, customer),
-    [cart, customer]
-  )
+  // const spendLimitExceeded = useMemo(
+  //   () => checkSpendingLimit(cart, customer),
+  //   [cart, customer]
+  // )
+  const spendLimitExceeded = false
 
   const totalItems = useMemo(
     () => cart?.items?.reduce((acc, item) => acc + item.quantity, 0) || 0,

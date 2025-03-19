@@ -458,6 +458,7 @@ export async function setContactDetails(
       metadata: {
         invoice_recipient: formData.get("invoice_recipient"),
         cost_center: formData.get("cost_center"),
+        alternative_phone_number: formData.get("alternative_phone_number"),
         requisition_number: formData.get("requisition_number"),
         door_code: formData.get("door_code"),
         notes: formData.get("notes"),

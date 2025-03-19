@@ -1,5 +1,6 @@
 import { HttpTypes } from "@medusajs/types"
 import { Heading, Text } from "@medusajs/ui"
+import OrderStatusBadge from "@modules/common/components/order-status-badge"
 
 type OrderDetailsProps = {
   order: HttpTypes.StoreOrder
@@ -10,11 +11,14 @@ const OrderDetails = ({ order }: OrderDetailsProps) => {
 
   return (
     <>
-      <Heading level="h3" className="mb-2">
-        Details
-      </Heading>
+      <div className="flex justify-between items-center">
+        <Heading level="h3">
+          Details
+        </Heading>
+        <OrderStatusBadge order={order} />
+      </div>
 
-      <div className="text-sm text-ui-fg-subtle overflow-auto">
+      <div className="text-sm text-ui-fg-subtle overflow-auto mt-2">
         <div className="flex justify-between">
           <Text>Order Number</Text>
           <Text>#{order.display_id}</Text>

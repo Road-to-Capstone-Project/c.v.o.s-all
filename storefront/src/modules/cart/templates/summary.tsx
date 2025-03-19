@@ -72,7 +72,7 @@ const Summary = ({ customer, spendLimitExceeded }: SummaryProps) => {
           </Button>
         </RequestQuoteConfirmation>
       )} */}
-      {!customer && (
+      {/* {!customer && (
         <RequestQuotePrompt>
           <Button
             className="w-full h-10 rounded-full shadow-borders-base"
@@ -81,8 +81,8 @@ const Summary = ({ customer, spendLimitExceeded }: SummaryProps) => {
             Request Quote
           </Button>
         </RequestQuotePrompt>
-      )}
-      <CartToCsvButton cart={cart} />
+      )} */}
+      {/* <CartToCsvButton cart={cart} /> */}
       <Button
         onClick={handleEmptyCart}
         className="w-full h-10 rounded-full shadow-borders-base"
