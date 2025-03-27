@@ -1,4 +1,5 @@
-import { useActionState } from "react";
+"use client"
+import { MouseEventHandler, useActionState } from "react"
 import { LOGIN_VIEW } from "@modules/account/templates/login-template"
 import { Checkbox, Text } from "@medusajs/ui"
 import Input from "@modules/common/components/input"
@@ -6,13 +7,60 @@ import ErrorMessage from "@modules/checkout/components/error-message"
 import { SubmitButton } from "@modules/checkout/components/submit-button"
 import { login } from "@lib/data/customer"
 import Button from "@modules/common/components/button"
+import { Google } from "@medusajs/icons"
+import { signIn, useSession } from "next-auth/react"
+
 
 type Props = {
   setCurrentView: (view: LOGIN_VIEW) => void
 }
 
 const Login = ({ setCurrentView }: Props) => {
+  const { data: session } = useSession()
   const [message, formAction] = useActionState(login, null)
+  const loginWithGoogle = async (
+    event: React.MouseEvent<HTMLButtonElement>
+  ) => {
+    event.preventDefault()
+    try {
+      const result = await fetch(`http://localhost:9000/auth/customer/google`, {
+        credentials: "include",
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+      }).then((res) => res.json())
+
+      if (result.location) {
+        // redirect to Google for authentication
+        window.location.href = result.location
+        return
+      }
+
+      if (!result.token) {
+        // result failed, show an error
+        alert("Authentication failed")
+        return
+      }
+
+      // authentication successful
+      const { customer } = await fetch(
+        `http://localhost:9000/store/customers/me`,
+        {
+          credentials: "include",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${result.token}`,
+            "x-publishable-api-key":
+              "pk_77effd0f2574e95bd7ee5ef8c420569d428130e533a8b112e7734611dfd777ef",
+          },
+        }
+      ).then((res) => res.json())
+    } catch (error) {
+      console.error("Error during login with Google:", error)
+    }
+  }
 
   return (
     <div
@@ -43,7 +91,7 @@ const Login = ({ setCurrentView }: Props) => {
             required
             data-testid="password-input"
           />
-          <div className="flex flex-col gap-2 w-full border-b border-neutral-200 my-6" />
+          <div className="flex flex-col w-full border-b border-neutral-200 my-6" />
           <div className="flex items-center gap-2">
             <Checkbox name="remember_me" data-testid="remember-me-checkbox" />
             <Text className="text-neutral-950 text-base-regular">
@@ -52,18 +100,31 @@ const Login = ({ setCurrentView }: Props) => {
           </div>
         </div>
         <ErrorMessage error={message} data-testid="login-error-message" />
-        <div className="flex flex-col gap-2">
-          <SubmitButton data-testid="sign-in-button" className="w-full mt-6">
-            Log in
-          </SubmitButton>
-          <Button
-            variant="secondary"
-            onClick={() => setCurrentView(LOGIN_VIEW.REGISTER)}
-            className="w-full h-10"
-            data-testid="register-button"
-          >
-            Register
-          </Button>
+        <div className="flex flex-col gap-8">
+          <div className="flex flex-col gap-2">
+            <SubmitButton data-testid="sign-in-button" className="w-full mt-6">
+              Log in
+            </SubmitButton>
+            <Button
+              variant="secondary"
+              onClick={loginWithGoogle}
+              className="w-full h-10 relative overflow-hidden rounded-full bg-white text-black"
+              data-testid="google-button"
+            >
+              <div className="flex items-center justify-center gap-2">
+                Sign in with Google
+                <Google />
+              </div>
+            </Button>
+            <Button
+              variant="secondary"
+              onClick={() => setCurrentView(LOGIN_VIEW.REGISTER)}
+              className="w-full h-10"
+              data-testid="register-button"
+            >
+              Register
+            </Button>
+          </div>
         </div>
       </form>
     </div>

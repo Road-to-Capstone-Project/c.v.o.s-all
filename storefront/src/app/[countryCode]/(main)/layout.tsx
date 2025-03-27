@@ -3,6 +3,7 @@ import { retrieveCustomer } from "@lib/data/customer"
 import { listCartFreeShippingPrices } from "@lib/data/fulfillment"
 import { getBaseURL } from "@lib/util/env"
 import { ArrowUpRightMini, ExclamationCircleSolid } from "@medusajs/icons"
+import { ChatWidget } from "@modules/chat/chatwidget"
 import CartMismatchBanner from "@modules/layout/components/cart-mismatch-banner"
 import Footer from "@modules/layout/templates/footer"
 import { NavigationHeader } from "@modules/layout/templates/nav"
@@ -49,7 +50,7 @@ export default async function PageLayout(props: { children: React.ReactNode }) {
       )}
 
       {props.children}
-
+      <ChatWidget />
       <Footer />
 
       {cart && freeShippingPrices && (

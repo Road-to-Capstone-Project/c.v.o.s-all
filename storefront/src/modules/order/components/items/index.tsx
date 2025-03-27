@@ -21,7 +21,11 @@ const Items = ({ items, order }: ItemsProps) => {
                   return (a.created_at ?? "") > (b.created_at ?? "") ? -1 : 1
                 })
                 .map((item) => {
-                  return <Item key={item.id} item={item} order={order} />
+                  return (
+                    <tr key={item.id}>
+                      <Item item={item} order={order} />
+                    </tr>
+                  )
                 })
             : repeat(5).map((i) => {
                 return <SkeletonLineItem key={i} />

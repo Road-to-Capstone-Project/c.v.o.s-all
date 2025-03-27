@@ -1,10 +1,8 @@
 "use client"
 
 import { signup } from "@lib/data/customer"
-import { Checkbox, Label, Select, Text } from "@medusajs/ui"
-
-import { currencySymbolMap } from "@lib/constants"
 import { HttpTypes } from "@medusajs/types"
+import { Checkbox, Label } from "@medusajs/ui"
 import { LOGIN_VIEW } from "@modules/account/templates/login-template"
 import ErrorMessage from "@modules/checkout/components/error-message"
 import { SubmitButton } from "@modules/checkout/components/submit-button"
@@ -34,11 +32,11 @@ const Register = ({ setCurrentView, regions }: Props) => {
       className="max-w-sm flex flex-col items-start gap-2 my-8"
       data-testid="register-page"
     >
-      <Text className="text-4xl text-neutral-950 text-left mb-4">
+      <div className="text-4xl text-neutral-950 text-left mb-4">
         Create your
         <br />
-        company account.
-      </Text>
+        personal account.
+      </div>
       <form className="w-full flex flex-col" action={formAction}>
         <div className="flex flex-col w-full gap-y-4">
           <Input
@@ -67,14 +65,6 @@ const Register = ({ setCurrentView, regions }: Props) => {
             className="bg-white"
           />
           <Input
-            label="Company name"
-            name="company_name"
-            required
-            autoComplete="organization"
-            data-testid="company-name-input"
-            className="bg-white"
-          />
-          <Input
             label="Password"
             name="password"
             required
@@ -83,72 +73,6 @@ const Register = ({ setCurrentView, regions }: Props) => {
             data-testid="password-input"
             className="bg-white"
           />
-          <Input
-            label="Company address"
-            name="company_address"
-            required
-            autoComplete="address"
-            data-testid="company-address-input"
-            className="bg-white"
-          />
-          <Input
-            label="Company city"
-            name="company_city"
-            required
-            autoComplete="city"
-            data-testid="company-city-input"
-            className="bg-white"
-          />
-          <Input
-            label="Company state"
-            name="company_state"
-            required
-            autoComplete="state"
-            data-testid="company-state-input"
-            className="bg-white"
-          />
-          <Input
-            label="Company zip"
-            name="company_zip"
-            required
-            autoComplete="postal-code"
-            data-testid="company-zip-input"
-            className="bg-white"
-          />
-          <Select
-            name="company_country"
-            required
-            autoComplete="country"
-            data-testid="company-country-input"
-          >
-            <Select.Trigger className="rounded-full h-10 px-4">
-              <Select.Value placeholder="Select a country" />
-            </Select.Trigger>
-            <Select.Content>
-              {countryNames?.map((country) => (
-                <Select.Item key={country} value={country}>
-                  {country}
-                </Select.Item>
-              ))}
-            </Select.Content>
-          </Select>
-          <Select
-            name="currency_code"
-            required
-            autoComplete="currency"
-            data-testid="company-currency-input"
-          >
-            <Select.Trigger className="rounded-full h-10 px-4">
-              <Select.Value placeholder="Select a currency" />
-            </Select.Trigger>
-            <Select.Content>
-              {[...new Set(currencies)].map((currency) => (
-                <Select.Item key={currency} value={currency}>
-                  {currency.toUpperCase()} ({currencySymbolMap[currency]})
-                </Select.Item>
-              ))}
-            </Select.Content>
-          </Select>
         </div>
         <div className="border-b border-neutral-200 my-6" />
         <ErrorMessage error={message} data-testid="register-error" />

@@ -19,6 +19,8 @@ import {
 } from "./cookies"
 import { retrieveCart, updateCart } from "./cart"
 
+
+
 export const retrieveCustomer = async (): Promise<B2BCustomer | null> => {
   const headers = {
     ...(await getAuthHeaders()),
@@ -64,8 +66,6 @@ export async function signup(_currentState: unknown, formData: FormData) {
     email: formData.get("email") as string,
     first_name: formData.get("first_name") as string,
     last_name: formData.get("last_name") as string,
-    phone: formData.get("phone") as string,
-    company_name: formData.get("company_name") as string,
   }
 
   try {
@@ -89,29 +89,6 @@ export async function signup(_currentState: unknown, formData: FormData) {
 
     setAuthToken(loginToken as string)
 
-    const companyForm = {
-      name: formData.get("company_name") as string,
-      email: formData.get("email") as string,
-      phone: formData.get("company_phone") as string,
-      address: formData.get("company_address") as string,
-      city: formData.get("company_city") as string,
-      state: formData.get("company_state") as string,
-      zip: formData.get("company_zip") as string,
-      country: formData.get("company_country") as string,
-      currency_code: formData.get("currency_code") as string,
-    }
-
-    const createdCompany = await createCompany(companyForm)
-
-    const createdEmployee = await createEmployee({
-      company_id: createdCompany?.id as string,
-      customer_id: createdCustomer.id,
-      is_admin: true,
-      spending_limit: 0,
-    }).catch((err) => {
-      console.log("error creating employee", err)
-    })
-
     const cacheTag = await getCacheTag("customers")
     revalidateTag(cacheTag)
 
@@ -119,8 +96,6 @@ export async function signup(_currentState: unknown, formData: FormData) {
 
     return {
       customer: createdCustomer,
-      company: createdCompany,
-      employee: createdEmployee,
     }
   } catch (error: any) {
     return error.toString()
@@ -172,6 +147,7 @@ export async function login(_currentState: unknown, formData: FormData) {
     return error.toString()
   }
 }
+
 
 export async function signout(countryCode: string, customerId: string) {
   await sdk.auth.logout()

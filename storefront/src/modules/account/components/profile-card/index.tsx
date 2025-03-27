@@ -86,7 +86,7 @@ const ProfileCard = ({ customer }: { customer: B2BCustomer }) => {
             <Input
               label="Phone"
               name="phone"
-              value={customerData.phone}
+              value={customerData.phone ?? ""}
               onChange={(e) =>
                 setCustomerData({ ...customerData, phone: e.target.value })
               }

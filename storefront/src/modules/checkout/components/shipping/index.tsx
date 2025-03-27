@@ -101,34 +101,31 @@ const Shipping: React.FC<ShippingProps> = ({
             <RadioGroup value={selectedShippingMethod?.id} onChange={set}>
               {availableShippingMethods?.map((option) => {
                 return (
-                  <>
-                    <RadioGroup.Option
-                      key={option.id}
-                      value={option.id}
-                      data-testid="delivery-option-radio"
-                      className={clx(
-                        "flex items-center justify-between text-small-regular cursor-pointer py-2",
-                        {
-                          "border-ui-border-interactive":
-                            option.id === selectedShippingMethod?.id,
-                        }
-                      )}
-                    >
-                      <div className="flex items-center gap-x-4">
-                        <Radio
-                          checked={option.id === selectedShippingMethod?.id}
-                        />
-                        <span className="text-base-regular">{option.name}</span>
-                      </div>
-                      <span className="justify-self-end text-ui-fg-base">
-                        {convertToLocale({
-                          amount: option.amount!,
-                          currency_code: cart?.currency_code,
-                        })}
-                      </span>
-                    </RadioGroup.Option>
-                    <Divider />
-                  </>
+                  <RadioGroup.Option
+                    key={option.id}
+                    value={option.id}
+                    data-testid="delivery-option-radio"
+                    className={clx(
+                      "flex items-center justify-between text-small-regular cursor-pointer py-2",
+                      {
+                        "border-ui-border-interactive":
+                          option.id === selectedShippingMethod?.id,
+                      }
+                    )}
+                  >
+                    <div className="flex items-center gap-x-4">
+                      <Radio
+                        checked={option.id === selectedShippingMethod?.id}
+                      />
+                      <span className="text-base-regular">{option.name}</span>
+                    </div>
+                    <span className="justify-self-end text-ui-fg-base">
+                      {convertToLocale({
+                        amount: option.amount!,
+                        currency_code: cart?.currency_code,
+                      })}
+                    </span>
+                  </RadioGroup.Option>
                 )
               })}
             </RadioGroup>

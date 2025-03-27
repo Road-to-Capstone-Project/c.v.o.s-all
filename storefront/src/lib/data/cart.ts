@@ -18,8 +18,10 @@ import {
 import { retrieveCustomer } from "./customer"
 import { getRegion } from "./regions"
 
-export async function retrieveCart() {
-  const cartId = await getCartId()
+export async function retrieveCart(cartId?: string) {
+  if (!cartId) {
+    cartId = await getCartId();
+  }
 
   if (!cartId) {
     return null
@@ -389,7 +391,6 @@ export async function setShippingAddress(
         last_name: formData.get("shipping_address.last_name"),
         address_1: formData.get("shipping_address.address_1"),
         address_2: "",
-        company: "",
         postal_code: formData.get("shipping_address.postal_code"),
         city: formData.get("shipping_address.city"),
         country_code: formData.get("shipping_address.country_code"),
@@ -427,7 +428,6 @@ export async function setBillingAddress(
         last_name: formData.get("billing_address.last_name"),
         address_1: formData.get("billing_address.address_1"),
         address_2: "",
-        company: "",
         postal_code: formData.get("billing_address.postal_code"),
         city: formData.get("billing_address.city"),
         country_code: formData.get("billing_address.country_code"),
@@ -472,8 +472,10 @@ export async function setContactDetails(
   redirect(`/checkout`)
 }
 
-export async function placeOrder() {
-  const cartId = await getCartId()
+export async function placeOrder(cartId?: string) {
+  if (!cartId) {
+    cartId = await getCartId()
+  }
   if (!cartId) {
     throw new Error("No existing cart found when placing an order")
   }

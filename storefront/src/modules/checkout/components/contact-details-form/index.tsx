@@ -49,12 +49,13 @@ const ContactDetailsForm = ({
         label="Email"
         name="email"
         autoComplete="email"
-        value={formData["email"]}
+        value={formData["email"] ?? ""}
         onChange={handleChange}
         required
         data-testid="email-input"
         className="small:col-span-2"
       />
+
       {/* <Input
         label="Invoice recipient"
         name="invoice_recipient"
@@ -89,7 +90,7 @@ const ContactDetailsForm = ({
         <Input
           label="Notes"
           name="notes"
-          value={formData["notes"]}
+          value={formData["notes"] ?? ""}
           onChange={handleChange}
           data-testid="notes-input"
           className="small:col-span-2"

@@ -62,27 +62,6 @@ const Summary = ({ customer, spendLimitExceeded }: SummaryProps) => {
             : "Log in to Checkout"}
         </Button>
       </LocalizedClientLink>
-      {/* {!!customer && (
-        <RequestQuoteConfirmation>
-          <Button
-            className="w-full h-10 rounded-full shadow-borders-base"
-            variant="secondary"
-          >
-            Request Quote
-          </Button>
-        </RequestQuoteConfirmation>
-      )} */}
-      {/* {!customer && (
-        <RequestQuotePrompt>
-          <Button
-            className="w-full h-10 rounded-full shadow-borders-base"
-            variant="secondary"
-          >
-            Request Quote
-          </Button>
-        </RequestQuotePrompt>
-      )} */}
-      <CartToCsvButton cart={cart} />
       <Button
         onClick={handleEmptyCart}
         className="w-full h-10 rounded-full shadow-borders-base"

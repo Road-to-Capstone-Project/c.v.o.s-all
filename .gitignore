@@ -53,5 +53,9 @@ yarn-error.log*
 .Trashes
 ehthumbs.db
 Thumbs.db
+<<<<<<< HEAD
+**/.DS_Store
+=======
 **/.DS_Store
 _README.md
+>>>>>>> upstream/main
