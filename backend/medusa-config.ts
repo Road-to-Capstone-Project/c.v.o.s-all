@@ -2,6 +2,8 @@ import { REVIEW_MODULE } from "./src/modules/review";
 import { QUOTE_MODULE } from "./src/modules/quote";
 import { loadEnv, defineConfig, Modules, ContainerRegistrationKeys } from "@medusajs/framework/utils";
 
+
+// Load environment variables
 loadEnv(process.env.NODE_ENV!, process.cwd());
 
 module.exports = defineConfig({
@@ -40,6 +42,17 @@ module.exports = defineConfig({
           {
             resolve: "@medusajs/medusa/auth-google",
             id: "google",
+            options: {
+              clientId: process.env.GOOGLE_CLIENT_ID,
+              clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+              callbackUrl: process.env.GOOGLE_CALLBACK_URL,
+            },
+          },
+          {
+            // if module provider is in a plugin, use `plugin-name/providers/my-auth`
+            resolve: "./src/modules/auth-custom-google",
+            id: "custom-google",
+            dependencies: [Modules.CACHE, ContainerRegistrationKeys.LOGGER],
             options: {
               clientId: process.env.GOOGLE_CLIENT_ID,
               clientSecret: process.env.GOOGLE_CLIENT_SECRET,

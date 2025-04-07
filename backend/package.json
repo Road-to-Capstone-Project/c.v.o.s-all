@@ -1,8 +1,8 @@
 {
   "name": "medusa-b2b-starter",
   "version": "0.0.1",
-  "description": "A starter for Medusa B2B projects.",
-  "author": "Medusa (https://medusajs.com)",
+  "description": "A starter for Medusa B2B  projects.",
+  "author": "",
   "license": "MIT",
   "keywords": [
     "sqlite",
@@ -31,8 +31,6 @@
     "@mikro-orm/migrations": "6.4.3",
     "@mikro-orm/postgresql": "6.4.3",
     "awilix": "^8.0.1",
-    "decode": "^0.3.0",
-    "jwt": "^0.2.0",
     "jwt-decode": "^4.0.0",
     "medusa-b2b-starter": "file:",
     "pg": "^8.13.0",

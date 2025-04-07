@@ -3,6 +3,7 @@
 import "server-only"
 
 import { cookies as nextCookies } from "next/headers"
+import { revalidateTag } from "next/cache"
 
 export const getAuthHeaders = async (): Promise<
   { authorization: string } | {}
@@ -92,4 +93,14 @@ export const removeCartId = async () => {
   cookies.set("_medusa_cart_id", "", {
     maxAge: -1,
   })
+}
+
+export async function revalidateCustomerCache(cacheTag: string) {
+  try {
+    revalidateTag(cacheTag)
+    return { success: true }
+  } catch (error) {
+    console.error("Error revalidating cache:", error)
+    return { success: false, error }
+  }
 }

@@ -1,11 +1,16 @@
-import { useActionState } from "react";
+"use client"
+import { MouseEventHandler, useActionState, useEffect, useState } from "react"
 import { LOGIN_VIEW } from "@modules/account/templates/login-template"
 import { Checkbox, Text } from "@medusajs/ui"
 import Input from "@modules/common/components/input"
 import ErrorMessage from "@modules/checkout/components/error-message"
 import { SubmitButton } from "@modules/checkout/components/submit-button"
-import { login } from "@lib/data/customer"
+import { login, transferCart } from "@lib/data/customer"
 import Button from "@modules/common/components/button"
+import { Google } from "@medusajs/icons"
+import { sdk } from "@lib/config"
+import { getCacheTag, revalidateCustomerCache, setAuthToken } from "@lib/data/cookies"
+
 
 type Props = {
   setCurrentView: (view: LOGIN_VIEW) => void
@@ -13,6 +18,57 @@ type Props = {
 
 const Login = ({ setCurrentView }: Props) => {
   const [message, formAction] = useActionState(login, null)
+  const [code, setCode] = useState<string | null>(null)
+  const [state, setState] = useState<string | null>(null)
+
+  useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search)
+    const code = urlParams.get("code")
+    const state = urlParams.get("state")
+    setCode(code)
+    setState(state)
+    if (code) {
+      sdk.auth.callback(
+        "customer",
+        "custom-google",
+        {
+          code: code,
+          state: state
+        }
+      ).then(async (token) => {
+        setAuthToken(token as string)
+        const cacheTag = await getCacheTag("customers")
+        await revalidateCustomerCache(cacheTag)
+        await transferCart()
+      })
+    }
+  }, [])
+
+
+  const loginWithGoogle = async (
+    event: React.MouseEvent<HTMLButtonElement>
+  ) => {
+    event.preventDefault()
+    try {
+      const result = await fetch(`${process.env.NEXT_PUBLIC_MEDUSA_BACKEND_URL}/auth/customer/google`, {
+        credentials: "include",
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+      }).then((res) => res.json())
+
+      if (result.location) {
+        // redirect to Google for authentication
+        window.location.href = result.location
+        return
+      }
+
+    } catch (error) {
+      console.error("Error during login with Google:", error)
+    }
+  }
 
   return (
     <div
@@ -56,6 +112,13 @@ const Login = ({ setCurrentView }: Props) => {
           <SubmitButton data-testid="sign-in-button" className="w-full mt-6">
             Log in
           </SubmitButton>
+          <Button data-testid="sign-in-button" className="w-full" onClick={loginWithGoogle}>
+            <Text className="text-neutral-950 text-base-regular">
+              Log in with</Text>
+            <Google className="w-4 h-4 mr-2" />
+            <Text className="text-neutral-950 text-base-regular">
+              Google</Text>
+          </Button>
           <Button
             variant="secondary"
             onClick={() => setCurrentView(LOGIN_VIEW.REGISTER)}
