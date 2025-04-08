@@ -19,6 +19,37 @@ import {
 } from "./cookies"
 import { retrieveCart, updateCart } from "./cart"
 
+export const requestPasswordChange = async (email: string) => {
+  const headers = {
+    ...(await getAuthHeaders()),
+  }
+
+  return sdk.auth.resetPassword("customer", "emailpass", { identifier: email })
+    .then(() => {
+      track("customer_requested_password_change")
+      return { success: true, error: null }
+    })
+    .catch((err) => {
+      return err.toString()
+    })
+}
+
+export const changePassword = async (new_password: string, token: string) => {
+  const headers = {
+    ...(await getAuthHeaders()),
+  }
+
+  return sdk.auth.updateProvider("customer", "emailpass", { password: new_password }, token)
+    .then(() => {
+      track("customer_changed_password")
+      return { success: true, error: null }
+    })
+    .catch((err) => {
+      return { success: false, error: err.toString() }
+    })
+
+}
+
 export const retrieveCustomer = async (): Promise<B2BCustomer | null> => {
   const headers = {
     ...(await getAuthHeaders()),
