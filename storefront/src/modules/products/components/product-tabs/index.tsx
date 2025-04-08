@@ -10,13 +10,16 @@ type ProductTabsProps = {
 }
 
 const ProductTabs = ({ product }: ProductTabsProps) => {
+  const specificationLabel = product.mid_code
+    ? "Recommended requirements"
+    : "Specifications"
   const tabs = [
     {
       label: "Description",
       component: <ProductSpecsTab product={product} />,
     },
     {
-      label: "Specifications",
+      label: specificationLabel,
       component: <ProductSpecificationsTab product={product} />,
     },
   ]

@@ -18,7 +18,7 @@ const Review = ({
     <div className="flex flex-col gap-y-2">
       <div className="flex items-start gap-x-1 w-full">
         <Text className="txt-xsmall text-neutral-500 mb-1">
-          By Completing this order, I agree to Medusa&apos;s{" "}
+          By Completing this order, I agree to C.V.O.S&apos;s{" "}
           <LocalizedClientLink
             href="/terms-of-sale"
             className="hover:text-neutral-800"

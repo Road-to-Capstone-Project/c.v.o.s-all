@@ -40,6 +40,10 @@ const nextConfig = {
         protocol: "https",
         hostname: "store-images.s-microsoft.com",
       },
+      {
+        protocol: "https",
+        hostname: "assets.nintendo.com",
+      },
     ],
   },
 }
