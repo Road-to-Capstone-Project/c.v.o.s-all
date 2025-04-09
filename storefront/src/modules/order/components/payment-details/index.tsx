@@ -43,11 +43,11 @@ const PaymentDetails = ({ order }: PaymentDetailsProps) => {
                   {isStripe(payment.provider_id) && payment.data?.card_last4
                     ? `**** **** **** ${payment.data.card_last4}`
                     : `${convertToLocale({
-                        amount: payment.amount,
-                        currency_code: order.currency_code,
-                      })} paid at ${new Date(
-                        payment.created_at ?? ""
-                      ).toLocaleString()}`}
+                      amount: payment.amount,
+                      currency_code: order.currency_code,
+                    })} need to be paid from now on (${new Date(
+                      payment.created_at ?? ""
+                    ).toLocaleString()})`}
                 </Text>
               </div>
             </div>
