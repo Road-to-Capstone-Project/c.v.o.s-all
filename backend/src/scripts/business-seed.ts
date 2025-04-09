@@ -630,6 +630,41 @@ export default async function seedDemoData({ container }: ExecArgs) {
                     handle: "action-adventure",
                     is_active: true,
                 },
+                {
+                    name: "Platformers",
+                    handle: "platformers",
+                    is_active: true,
+                },
+                {
+                    name: "Kids & Family",
+                    handle: "kids-family",
+                    is_active: true,
+                },
+                {
+                    name: "Racing & Flying",
+                    handle: "racing-flying",
+                    is_active: true,
+                },
+                {
+                    name: "Shooters",
+                    handle: "shooters",
+                    is_active: true,
+                },
+                {
+                    name: "Roleplaying",
+                    handle: "roleplaying",
+                    is_active: true,
+                },
+                {
+                    name: "Sports",
+                    handle: "sports",
+                    is_active: true,
+                },
+                {
+                    name: "Strategy",
+                    handle: "strategy",
+                    is_active: true,
+                },
             ],
         },
     });
@@ -640,6 +675,7 @@ export default async function seedDemoData({ container }: ExecArgs) {
                 {
                     title:
                         '16" Ultra-Slim AI Laptop | 3K OLED | 1.1cm Thin | 6-Speaker Audio',
+                    mid_code: "1234567890",
                     collection_id: collection.id,
                     category_ids: [
                         categoryResult.find((cat) => cat.name === "Laptops")?.id!,
@@ -748,6 +784,7 @@ export default async function seedDemoData({ container }: ExecArgs) {
             products: [
                 {
                     title: "1080p HD Pro Webcam | Superior Video | Privacy enabled",
+                    mid_code: "1234567890",
                     category_ids: [
                         categoryResult.find((cat) => cat.name === "Accessories")?.id!,
                     ],
@@ -846,6 +883,7 @@ export default async function seedDemoData({ container }: ExecArgs) {
             products: [
                 {
                     title: `6.5" Ultra HD Smartphone | 3x Impact-Resistant Screen`,
+                    mid_code: "1234567890",
                     collection_id: collection.id,
                     category_ids: [
                         categoryResult.find((cat) => cat.name === "Phones")?.id!,
@@ -954,6 +992,7 @@ export default async function seedDemoData({ container }: ExecArgs) {
             products: [
                 {
                     title: `34" QD-OLED Curved Gaming Monitor | Ultra-Wide | Infinite Contrast | 175Hz`,
+                    mid_code: "1234567890",
                     collection_id: collection.id,
                     category_ids: [
                         categoryResult.find((cat) => cat.name === "Monitors")?.id!,
@@ -1059,6 +1098,7 @@ export default async function seedDemoData({ container }: ExecArgs) {
             products: [
                 {
                     title: "Hi-Fi Gaming Headset | Pro-Grade DAC | Hi-Res Certified",
+                    mid_code: "1234567890",
                     collection_id: collection.id,
                     category_ids: [
                         categoryResult.find((cat) => cat.name === "Accessories")?.id!,
@@ -1160,6 +1200,7 @@ export default async function seedDemoData({ container }: ExecArgs) {
             products: [
                 {
                     title: "Wireless Keyboard | Touch ID | Numeric Keypad",
+                    mid_code: "1234567890",
                     category_ids: [
                         categoryResult.find((cat) => cat.name === "Accessories")?.id!,
                     ],
@@ -1257,6 +1298,7 @@ export default async function seedDemoData({ container }: ExecArgs) {
             products: [
                 {
                     title: "Wireless Rechargeable Mouse | Multi-Touch Surface",
+                    mid_code: "1234567890",
                     category_ids: [
                         categoryResult.find((cat) => cat.name === "Accessories")?.id!,
                     ],
@@ -1287,13 +1329,25 @@ export default async function seedDemoData({ container }: ExecArgs) {
                             manage_inventory: true,
                             prices: [
                                 {
-                                    amount: 79,
+                                    amount: 72,
                                     currency_code: "eur",
                                 },
                                 {
-                                    amount: 79,
-                                    currency_code: "usd",
+                                    amount: 2013500,
+                                    currency_code: "vnd",
                                 },
+                                {
+                                    amount: 323800,
+                                    currency_code: "khr",
+                                },
+                                {
+                                    amount: 1606400,
+                                    currency_code: "lak",
+                                },
+                                {
+                                    amount: 77,
+                                    currency_code: "usd",
+                                }
                             ],
                         },
                         {
@@ -1341,6 +1395,7 @@ export default async function seedDemoData({ container }: ExecArgs) {
         input: {
             products: [
                 {
+
                     title: "Conference Speaker | High-Performance | Budget-Friendly",
                     category_ids: [
                         categoryResult.find((cat) => cat.name === "Accessories")?.id!,
@@ -1424,6 +1479,7 @@ export default async function seedDemoData({ container }: ExecArgs) {
                             ],
                         },
                     ],
+                    mid_code: "1234567890",
                     sales_channels: [
                         {
                             id: defaultSalesChannel[0].id,
@@ -1564,6 +1620,277 @@ export default async function seedDemoData({ container }: ExecArgs) {
                             id: defaultSalesChannel[0].id,
                         },
                     ],
+                    metadata: {
+                        "OS": "Windows 10 version 18362.0 or higher",
+                        "Architecture": "x64",
+                        "Graphics": "NVIDIA RTX 2060 Super or RX 5700XT",
+                        "Processor": "Intel Core i5 8600K or AMD Ryzen 5 3600XT",
+                        "Keyboard": "Integrated Keyboard",
+                        "Mouse": "Integrated Mouse",
+                        "Controller": "Xbox controller or gamepad",
+                        "DirectX": "Version 11",
+                        "Memory": "16 GB",
+                        "Video Memory": "6 GB",
+                    }
+
+                },
+            ],
+        },
+    });
+
+    await createProductsWorkflow(container).run({
+        input: {
+            products: [
+                {
+                    title: "The Adventure of Ori",
+                    collection_id: collection.id,
+                    category_ids: [
+                        categoryResult.find((cat) => cat.name === "Platformers")?.id!,
+                    ],
+                    description:
+                        "The Adventure of Ori is a visually stunning platformer that delivers a deeply emotional story, challenging puzzles, and fluid combat. Embark on an epic journey through a mystical world filled with wonder and danger.",
+                    status: ProductStatus.PUBLISHED,
+                    options: [
+                        {
+                            title: "Edition",
+                            values: ["Ori and the Blind Forest", "Ori and the Will of the Wisps"],
+                        },
+                    ],
+                    images: [
+                        {
+                            url: "https://store-images.s-microsoft.com/image/apps.15568.14566546603801090.bfdd0400-3c33-4fef-8e32-472bcf6c08e6.6b963e3d-c91e-4e13-ab1e-71281d281559",
+                        },
+                        {
+                            url: "https://store-images.s-microsoft.com/image/apps.7767.14566546603801090.bfdd0400-3c33-4fef-8e32-472bcf6c08e6.91d25cc7-4edd-4a75-b85b-f5f704636066",
+                        },
+                        {
+                            url: "https://store-images.s-microsoft.com/image/apps.28996.14566546603801090.bfdd0400-3c33-4fef-8e32-472bcf6c08e6.891a1e15-cfab-4abb-b401-1ba50010afb7",
+                        },
+                        {
+                            url: "https://store-images.s-microsoft.com/image/apps.64172.14566546603801090.bfdd0400-3c33-4fef-8e32-472bcf6c08e6.97db0d31-a760-4f89-864f-65f391b5d4f3",
+                        },
+                    ],
+                    variants: [
+                        {
+                            title: "Ori and the Will of the Wisps",
+                            sku: "ORI-WILL-OF-THE-WISPS",
+                            manage_inventory: true,
+                            prices: [
+                                {
+                                    amount: 25,
+                                    currency_code: "eur",
+                                },
+                                {
+                                    amount: 710000,
+                                    currency_code: "vnd",
+                                },
+                                {
+                                    amount: 115000,
+                                    currency_code: "khr",
+                                },
+                                {
+                                    amount: 600000,
+                                    currency_code: "lak",
+                                },
+                                {
+                                    amount: 29.99,
+                                    currency_code: "usd",
+                                },
+                            ],
+                            options: {
+                                Edition: "Ori and the Will of the Wisps",
+                            },
+                        },
+                        {
+                            title: "Ori and the Blind Forest",
+                            sku: "ORI-BLIND-FOREST",
+                            manage_inventory: true,
+                            prices: [
+                                {
+                                    amount: 30,
+                                    currency_code: "eur",
+                                },
+                                {
+                                    amount: 850000,
+                                    currency_code: "vnd",
+                                },
+                                {
+                                    amount: 137000,
+                                    currency_code: "khr",
+                                },
+                                {
+                                    amount: 700000,
+                                    currency_code: "lak",
+                                },
+                                {
+                                    amount: 34.99,
+                                    currency_code: "usd",
+                                },
+                            ],
+                            options: {
+                                Edition: "Ori and the Blind Forest",
+                            },
+                        },
+                    ],
+                    sales_channels: [
+                        {
+                            id: defaultSalesChannel[0].id,
+                        },
+                    ],
+                    metadata: {
+                        "Architecture": "x64",
+                        "Graphics": "NVIDIA® GeForce® GTX 660 / AMD Radeon™ R9 280 (3GB or more VRAM)",
+                        "Processor": "Intel® Core™ i7 / AMD FX-8350",
+                        "Keyboard": "Integrated Keyboard",
+                        "Mouse": "Integrated Mouse",
+                        "Controller": "gamepad",
+                        "Memory": "8 GB",
+                        "Also can play with": "PlayStation 5, Nintendo Switch"
+                    }
+                },
+            ],
+        },
+    });
+
+    await createProductsWorkflow(container).run({
+        input: {
+            products: [
+                {
+                    title: "Minecraft",
+                    collection_id: collection.id,
+                    category_ids: [
+                        categoryResult.find((cat) => cat.name === "Kids & Family")?.id!,
+                    ],
+                    description:
+                        "Minecraft is a sandbox game that empowers creativity and exploration. Build, mine, and survive in a procedurally generated world, offering endless adventures in both single-player and multiplayer modes.",
+                    status: ProductStatus.PUBLISHED,
+                    options: [
+                        {
+                            title: "Edition",
+                            values: ["Deluxe Collection", "Dungeons", "Legends"],
+                        },
+                    ],
+                    images: [
+                        {
+                            url: "https://store-images.s-microsoft.com/image/apps.26021.14601968722510098.29802ab2-a3be-4af1-b487-390de5a77b50.c9f485c6-df88-449a-8536-4e5eec5b6198",
+                        },
+                        {
+                            url: "https://store-images.s-microsoft.com/image/apps.37950.14601968722510098.29802ab2-a3be-4af1-b487-390de5a77b50.1ac5e459-3b2a-4634-b7c7-46256edfc408",
+                        },
+                        {
+                            url: "https://store-images.s-microsoft.com/image/apps.63804.14601968722510098.29802ab2-a3be-4af1-b487-390de5a77b50.9aea7af8-f8d9-4add-bab4-d8b003bfdf2f",
+                        },
+                        {
+                            url: "https://store-images.s-microsoft.com/image/apps.63804.14601968722510098.29802ab2-a3be-4af1-b487-390de5a77b50.9aea7af8-f8d9-4add-bab4-d8b003bfdf2f",
+                        },
+                    ],
+                    variants: [
+                        {
+                            title: "Minecraft - Deluxe Collection",
+                            sku: "MINECRAFT-DELUXE",
+                            manage_inventory: true,
+                            prices: [
+                                {
+                                    amount: 26,
+                                    currency_code: "eur",
+                                },
+                                {
+                                    amount: 740000,
+                                    currency_code: "vnd",
+                                },
+                                {
+                                    amount: 120000,
+                                    currency_code: "khr",
+                                },
+                                {
+                                    amount: 630000,
+                                    currency_code: "lak",
+                                },
+                                {
+                                    amount: 29.99,
+                                    currency_code: "usd",
+                                },
+                            ],
+                            options: {
+                                Edition: "Deluxe Collection",
+                            },
+                        },
+                        {
+                            title: "Minecraft Dungeons",
+                            sku: "MINECRAFT-DUNGEONS",
+                            manage_inventory: true,
+                            prices: [
+                                {
+                                    amount: 30,
+                                    currency_code: "eur",
+                                },
+                                {
+                                    amount: 850000,
+                                    currency_code: "vnd",
+                                },
+                                {
+                                    amount: 138000,
+                                    currency_code: "khr",
+                                },
+                                {
+                                    amount: 700000,
+                                    currency_code: "lak",
+                                },
+                                {
+                                    amount: 34.99,
+                                    currency_code: "usd",
+                                },
+                            ],
+                            options: {
+                                Edition: "Dungeons",
+                            },
+                        },
+                        {
+                            title: "Minecraft Legends",
+                            sku: "MINECRAFT-LEGENDS",
+                            manage_inventory: true,
+                            prices: [
+                                {
+                                    amount: 35,
+                                    currency_code: "eur",
+                                },
+                                {
+                                    amount: 1000000,
+                                    currency_code: "vnd",
+                                },
+                                {
+                                    amount: 160000,
+                                    currency_code: "khr",
+                                },
+                                {
+                                    amount: 850000,
+                                    currency_code: "lak",
+                                },
+                                {
+                                    amount: 39.99,
+                                    currency_code: "usd",
+                                },
+                            ],
+                            options: {
+                                Edition: "Legends",
+                            },
+                        },
+                    ],
+                    sales_channels: [
+                        {
+                            id: defaultSalesChannel[0].id,
+                        },
+                    ],
+                    metadata: {
+                        "Architecture": "x64",
+                        "Graphics": "NVIDIA® GeForce® GTX 630 / AMD Radeon™ R9 280 (3GB or more VRAM)",
+                        "Processor": "Intel® Core™ i5 / AMD FX-8350",
+                        "Keyboard": "Integrated Keyboard",
+                        "Mouse": "Integrated Mouse",
+                        "Memory": "8 GB",
+                        "Also can play with": "Xbox One, Xbox Series X|S, Xbox Cloud Gaming, PlayStation 4, PlayStation 5, Nintendo Switch"
+
+                    }
                 },
             ],
         },
@@ -1721,15 +2048,182 @@ export default async function seedDemoData({ container }: ExecArgs) {
                             ],
                         },
                     ],
+                    mid_code: "MS-XBSX-2020-001",
                     sales_channels: [
                         {
                             id: defaultSalesChannel[0].id,
                         },
                     ],
+                    metadata: {
+                        "Processor Cpu Cores": "8X Cores",
+                        "Processor Cpu Clock Speed": "3.8 GHz",
+                        "Processor Cpu Clock Speed Smt": "3.6 GHz w/SMT",
+                        "Processor Cpu Architecture": "Custom Zen 2 CPU",
+                        "Processor Gpu Performance": "12 TFLOPS",
+                        "Processor Gpu Compute Units": "52 CUs",
+                        "Processor Gpu Clock Speed": "1.825 GHz",
+                        "Processor Gpu Architecture": "Custom RDNA 2 GPU",
+                        "Processor Soc Die Size": "360.45 mm2",
+                        "Processor Process": "7nm Enhanced",
+                        "Memory Size": "16GB",
+                        "Memory Type": "GDDR6",
+                        "Memory Bus Width": "320 bit-wide",
+                        "Memory Bandwidth 10GB": "560 GB/s",
+                        "Memory Bandwidth 6GB": "336 GB/s",
+                        "Internal Storage 1": "Xbox Series X Carbon Black: 1TB Custom NVME SSD",
+                        "Internal Storage 2": "Xbox Series X – 1TB Digital Edition: 1TB Custom NVME SSD",
+                        "Internal Storage 3": "Xbox Series X – 2TB Galaxy Black Special Edition: 2TB Custom NVME SSD",
+                        "Io Throughput Raw": "2.4 GB/s",
+                        "Io Throughput Compressed": "4.8 GB/s (with custom hardware decompression block)",
+                        "Expandable Storage Supported": "Storage Expansion Cards for Xbox Series X|S, USB 3.1 external HDD (sold separately)",
+                        "Gaming Resolution": "True 4K",
+                        "High Dynamic Range": "Up to 8K HDR",
+                        "Optical Drive 1": "Xbox Series X Carbon Black: 4K UHD Blu-Ray",
+                        "Optical Drive 2": "Xbox Series X – 2TB Galaxy Black Special Edition: 4K UHD Blu-Ray",
+                        "Performance Target": "Up to 120 FPS",
+                        "Hdmi Features": "Auto Low Latency Mode, HDMI Variable Refresh Rate, AMD FreeSync",
+                        "Sound Capabilities": "Dolby Digital 5.1, DTS 5.1, Dolby TrueHD with Atmos, Up to 7.1 L-PCM",
+                        "Hdmi Ports": "1x HDMI 2.1 port",
+                        "Usb Ports": "3x USB 3.1 Gen 1 ports",
+                        "Wireless": "802.11ac dual band",
+                        "Ethernet": "802.3 10/100/1000",
+                        "Accessories Radio": "Dedicated dual band Xbox Wireless radio",
+                        "Design Dimensions": "Height: 301 mm, Depth: 151 mm, Breadth: 151 mm",
+                        "Design Weight": "9.8 lbs"
+                    }
                 },
             ],
         },
     });
+
+    await createProductsWorkflow(container).run({
+        input: {
+            products: [
+                {
+                    title: "Nintendo Switch",
+                    category_ids: [
+                        categoryResult.find((cat) => cat.name === "Consoles")?.id!,
+                    ],
+                    description:
+                        "Nintendo Switch is a versatile gaming console that offers a unique hybrid experience. Enjoy gaming on your TV or on-the-go with detachable controllers and a vast library of exclusive titles.",
+                    status: ProductStatus.PUBLISHED,
+                    images: [
+                        { url: "https://assets.nintendo.com/image/upload/ar_16:9,c_lpad,w_1065/b_white/f_auto/q_auto/ncom/My%20Nintendo%20Store/EN-US/Hardware/nintendo-switch-neon-blue-neon-red-joy-con-117972/117972-nintendo-switch-neon-blue-neon-red-package-front-1200x675" },
+                        { url: "https://assets.nintendo.com/image/upload/ar_16:9,b_auto:border,c_lpad/b_white/f_auto/q_auto/dpr_1.5/c_scale,w_700/ncom/en_US/products/hardware/nintendo-switch-red-blue/110478-nintendo-switch-neon-blue-neon-red-console-docked-joy-con-grip-1200x675" },
+                        { url: "https://assets.nintendo.com/image/upload/ar_16:9,c_lpad,w_1065/b_white/f_auto/q_auto/ncom/en_US/products/hardware/nintendo-switch-gray/110477-nintendo-switch-gray-gray-package-front-1200x675" },
+                        { url: "https://assets.nintendo.com/image/upload/ar_16:9,b_auto:border,c_lpad/b_white/f_auto/q_auto/dpr_1.5/c_scale,w_100/ncom/en_US/products/hardware/nintendo-switch-gray/110477-nintendo-switch-gray-gray-console-docked-joy-con-grip-1200x675" },
+                    ],
+                    options: [
+                        {
+                            title: "Model",
+                            values: ["Standard", "OLED"],
+                        },
+                        {
+                            title: "Color",
+                            values: ["Neon Red/Neon Blue", "Gray"],
+                        },
+                    ],
+                    variants: [
+                        {
+                            title: "Nintendo Switch – Standard Neon Red/Neon Blue",
+                            sku: "NINTENDO-SWITCH-STANDARD-NEON",
+                            options: {
+                                Model: "Standard",
+                                Color: "Neon Red/Neon Blue",
+                            },
+                            manage_inventory: true,
+                            prices: [
+                                {
+                                    amount: 269,
+                                    currency_code: "eur",
+                                },
+                                {
+                                    amount: 6800000,
+                                    currency_code: "vnd",
+                                },
+                                {
+                                    amount: 1950000,
+                                    currency_code: "khr",
+                                },
+                                {
+                                    amount: 13500000,
+                                    currency_code: "lak",
+                                },
+                                {
+                                    amount: 299.99,
+                                    currency_code: "usd",
+                                },
+                            ],
+                        },
+                        {
+                            title: "Nintendo Switch – OLED Gray",
+                            sku: "NINTENDO-SWITCH-OLED-GRAY",
+                            options: {
+                                Model: "OLED",
+                                Color: "Gray",
+                            },
+                            manage_inventory: true,
+                            prices: [
+                                {
+                                    amount: 320,
+                                    currency_code: "eur",
+                                },
+                                {
+                                    amount: 7500000,
+                                    currency_code: "vnd",
+                                },
+                                {
+                                    amount: 2200000,
+                                    currency_code: "khr",
+                                },
+                                {
+                                    amount: 15000000,
+                                    currency_code: "lak",
+                                },
+                                {
+                                    amount: 349.99,
+                                    currency_code: "usd",
+                                },
+                            ],
+                        },
+                    ],
+                    sales_channels: [
+                        {
+                            id: defaultSalesChannel[0].id,
+                        },
+                    ],
+                    mid_code: "NT-SWITCH-3983-301",
+                    metadata: {
+                        "Processor Cpu Cores": "4 cores",
+                        "Processor Cpu Clock Speed": "1.02 GHz",
+                        "Processor Cpu Architecture": "ARM Cortex-A57",
+                        "Processor Gpu Performance": "Approx. 1.0 TFLOPS",
+                        "Processor Gpu Compute Units": "256 CUDA cores",
+                        "Processor Gpu Clock Speed": "768 MHz",
+                        "Processor Gpu Architecture": "Nvidia Maxwell",
+                        "Processor Process": "20nm",
+                        "Memory Size": "4GB",
+                        "Memory Type": "LPDDR4",
+                        "Memory Bandwidth": "25.6 GB/s",
+                        "Internal Storage": "32GB eMMC",
+                        "Expandable Storage Supported": "microSDXC (up to 2TB)",
+                        "Gaming Resolution": "720p (handheld) / 1080p (docked)",
+                        "High Dynamic Range": "Not supported",
+                        "Performance Target": "Up to 60 FPS",
+                        "Hdmi Features": "Standard HDMI output",
+                        "Sound Capabilities": "Stereo speakers, 3.5mm headphone jack",
+                        "Hdmi Ports": "1x HDMI (via dock)",
+                        "Usb Ports": "1x USB-C (docking)",
+                        "Wireless": "802.11ac Wi-Fi",
+                        "Ethernet": "Supported via dock adapter",
+                        "Design Dimensions": "102mm x 239mm x 13.9mm (handheld)",
+                        "Design Weight": "297g"
+                    }
+                },
+            ],
+        },
+    });
+
     logger.info("Finished seeding product data.");
 
     logger.info("Seeding inventory item data...");
