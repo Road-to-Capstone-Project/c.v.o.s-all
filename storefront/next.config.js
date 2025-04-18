@@ -44,6 +44,10 @@ const nextConfig = {
         protocol: "https",
         hostname: "assets.nintendo.com",
       },
+      {
+        protocol: "https",
+        hostname: `${process.env.SUPABASE_UNIQUE_ID}.supabase.co`,
+      },
     ],
   },
 }

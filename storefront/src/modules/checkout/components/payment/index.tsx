@@ -36,7 +36,7 @@ const Payment = ({
   const pathname = usePathname()
 
   const availableInternalPaymentMethods = ["cod", "stripe"]
-  const [selectedIntenalPaymentMethod, setSelectedInternalPaymentMethod] = useState<string>(activeSession.provider_id === 'pp_stripe_stripe' ? availableInternalPaymentMethods[1] : availableInternalPaymentMethods[0])
+  const [selectedIntenalPaymentMethod, setSelectedInternalPaymentMethod] = useState<string>(activeSession?.provider_id === 'pp_stripe_stripe' ? availableInternalPaymentMethods[1] : availableInternalPaymentMethods[0])
 
   const isOpen = searchParams.get("step") === "payment"
 
@@ -88,7 +88,7 @@ const Payment = ({
   }
 
   useEffect(() => {
-    if (!activeSession && isOpen) {
+    if (!activeSession || (isOpen && selectedIntenalPaymentMethod === "cod")) {
       initDefaultPayment()
     }
   }, [cart, isOpen, activeSession])
@@ -283,12 +283,12 @@ const Payment = ({
         <div className={isOpen ? "hidden" : "block"}>
           <div className="flex items-start gap-x-1 w-full">
             <div className="flex flex-row w-1/3 gap-1 justify-start items-center">
-              {paymentInfoMap[activeSession.provider_id]?.icon}
+              {paymentInfoMap[activeSession?.provider_id]?.icon}
               <Text
                 className="txt-medium text-ui-fg-subtle"
                 data-testid="payment-method-summary"
               >
-                {paymentInfoMap[activeSession.provider_id]?.title}
+                {paymentInfoMap[activeSession?.provider_id]?.title}
               </Text>
             </div>
           </div>

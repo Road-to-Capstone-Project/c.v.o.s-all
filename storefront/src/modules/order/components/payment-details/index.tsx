@@ -45,7 +45,7 @@ const PaymentDetails = ({ order }: PaymentDetailsProps) => {
                     : `${convertToLocale({
                       amount: payment.amount,
                       currency_code: order.currency_code,
-                    })} need to be paid from now on (${new Date(
+                    })} ${payment.provider_id === 'pp_system_default' && "need to be paid from now on"} (${new Date(
                       payment.created_at ?? ""
                     ).toLocaleString()})`}
                 </Text>
