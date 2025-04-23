@@ -2,7 +2,9 @@ import { model } from "@medusajs/framework/utils";
 
 export const Review = model.define("review", {
   id: model.id({ prefix: "rev" }).primaryKey(),
+  variant_sku: model.text(),
+  customer_name: model.text(),
+  title: model.text(),
   content: model.text(),
-  customer_id: model.text(),
-  variant_id: model.text(),
+  rating: model.number().default(0),
 });

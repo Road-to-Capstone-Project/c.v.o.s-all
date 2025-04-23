@@ -482,12 +482,14 @@ export async function placeOrder() {
     ...(await getAuthHeaders()),
   }
 
-  const cacheTag = await getCacheTag("carts")
+  const cacheCartTag = await getCacheTag("carts")
+  const cacheOrdersTag = await getCacheTag("orders")
 
   const cartRes = await sdk.store.cart
     .complete(cartId, {}, headers)
     .then((cartRes) => {
-      revalidateTag(cacheTag)
+      revalidateTag(cacheCartTag)
+      revalidateTag(cacheOrdersTag)
       return cartRes
     })
     .catch(medusaError)

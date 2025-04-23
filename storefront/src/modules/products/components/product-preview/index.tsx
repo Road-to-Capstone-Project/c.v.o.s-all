@@ -42,7 +42,7 @@ export default async function ProductPreview({
           />
         </div>
         <div className="flex flex-col txt-compact-medium">
-          <Text className="text-neutral-600 text-xs">BRAND</Text>
+          <Text className="text-neutral-600 text-xs">{product.subtitle?.toUpperCase()}</Text>
           <Text className="text-ui-fg-base" data-testid="product-title">
             {product.title}
           </Text>

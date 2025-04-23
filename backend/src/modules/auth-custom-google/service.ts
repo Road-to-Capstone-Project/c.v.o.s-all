@@ -165,6 +165,7 @@ class AuthCustomGoogleProviderService extends AbstractAuthModuleProvider {
                                 first_name: userMetadata.given_name,
                                 last_name: userMetadata.family_name,
                                 email: userMetadata.email,
+                                metadata: { provider: 'google' },
                             }
                         }
                     }

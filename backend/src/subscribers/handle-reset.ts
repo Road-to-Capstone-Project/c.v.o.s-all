@@ -23,15 +23,17 @@ export default async function resetPasswordTokenHandler({
         process.env.PUBLIC_MEDUSA_BACKEND_URL
 
     try {
+        const resetLink = `${urlPrefix}/account/profile?token=${token}&email=${email}`
         await notificationModuleService.createNotifications({
             to: email,
             channel: "email",
             template: "reset-password-template",
             data: {
                 // a URL to a frontend application
-                resetLink: `${urlPrefix}/account/profile?token=${token}&email=${email}`,
+                resetLink: resetLink,
             },
         })
+        logger.info(`Reset link is ${resetLink}`)
     } catch (error) {
         logger.error(error)
     }

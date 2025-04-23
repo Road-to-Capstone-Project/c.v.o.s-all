@@ -93,7 +93,7 @@ const ItemFull = ({ item, showBorders = true, currencyCode }: ItemProps) => {
         </LocalizedClientLink>
         <div className="flex flex-col gap-y-2 justify-between min-h-full self-stretch">
           <div className="flex flex-col">
-            <span className="text-neutral-600 text-[0.6rem]">BRAND</span>
+            <span className="text-neutral-600 text-[0.6rem]">{item.product_subtitle}</span>
 
             <span className="txt-medium-plus text-neutral-950">
               {item.product?.title}

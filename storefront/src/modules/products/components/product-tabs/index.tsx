@@ -4,15 +4,18 @@ import { HttpTypes } from "@medusajs/types"
 import { Table, Text } from "@medusajs/ui"
 import Markdown from "react-markdown"
 import Accordion from "./accordion"
+import ProductReviews from "../product-reviews"
+import { ModuleReview } from "@starter/types"
 
 type ProductTabsProps = {
   product: HttpTypes.StoreProduct
+  reviews?: ModuleReview[]
 }
 
-const ProductTabs = ({ product }: ProductTabsProps) => {
+const ProductTabs = ({ product, reviews }: ProductTabsProps) => {
   const specificationLabel = product.mid_code
-    ? "Recommended requirements"
-    : "Specifications"
+    ? "Specifications"
+    : "Recommended requirements"
   const tabs = [
     {
       label: "Description",
@@ -22,6 +25,10 @@ const ProductTabs = ({ product }: ProductTabsProps) => {
       label: specificationLabel,
       component: <ProductSpecificationsTab product={product} />,
     },
+    {
+      label: "Reviews",
+      component: <ProductReviews product={product} reviews={reviews} />,
+    }
   ]
 
   return (

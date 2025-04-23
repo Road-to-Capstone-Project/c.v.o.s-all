@@ -1,0 +1,1 @@
+export const getFirstChars = (str: string): string => str.split(' ').map(w => w[0].toUpperCase()).join('');

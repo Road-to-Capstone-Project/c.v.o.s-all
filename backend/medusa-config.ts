@@ -7,6 +7,7 @@ import { loadEnv, defineConfig, Modules, ContainerRegistrationKeys } from "@medu
 loadEnv(process.env.NODE_ENV!, process.cwd());
 
 
+
 module.exports = defineConfig({
   projectConfig: {
     databaseUrl: process.env.DATABASE_URL,

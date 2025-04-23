@@ -17,13 +17,6 @@ const ProductInfo = ({ product }: ProductInfoProps) => {
         >
           {product.title}
         </Heading>
-
-        <Text
-          className="text-2xl text-ui-fg-subtle whitespace-pre-line"
-          data-testid="product-description"
-        >
-          {product.subtitle}
-        </Text>
       </div>
     </div>
   )

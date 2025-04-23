@@ -2,6 +2,7 @@ import { sdk } from "@lib/config"
 import { getAuthHeaders } from "@lib/data/cookies"
 import { getProductByHandle } from "@lib/data/products"
 import { getRegion, listRegions } from "@lib/data/regions"
+import { listReviewsWithSort } from "@lib/data/reviews"
 import ProductTemplate from "@modules/products/templates"
 import { Metadata } from "next"
 import { notFound } from "next/navigation"
@@ -38,8 +39,7 @@ export async function generateStaticParams() {
       .filter((param) => param.handle)
   } catch (error) {
     console.error(
-      `Failed to generate static paths for product pages: ${
-        error instanceof Error ? error.message : "Unknown error"
+      `Failed to generate static paths for product pages: ${error instanceof Error ? error.message : "Unknown error"
       }.`
     )
     return []
@@ -85,11 +85,14 @@ export default async function ProductPage(props: Props) {
     notFound()
   }
 
+  const { reviews: productReviews } = await listReviewsWithSort({ product_id: pricedProduct.id })
+
   return (
     <ProductTemplate
       product={pricedProduct}
       region={region}
       countryCode={params.countryCode}
+      reviews={productReviews}
     />
   )
 }

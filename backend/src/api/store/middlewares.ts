@@ -6,9 +6,9 @@ import { storeQuotesMiddlewares } from "./quotes/middlewares";
 import { storeReviewsMiddlewares } from "./reviews/middlewares";
 
 export const storeMiddlewares: MiddlewareRoute[] = [
+  ...storeReviewsMiddlewares,
   ...storeCartsMiddlewares,
   ...storeCompaniesMiddlewares,
   ...storeQuotesMiddlewares,
   ...storeFreeShippingMiddlewares,
-  ...storeReviewsMiddlewares
 ];

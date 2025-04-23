@@ -1,31 +1,48 @@
 import {
   AuthenticatedMedusaRequest,
+  logger,
+  MedusaRequest,
   MedusaResponse,
 } from "@medusajs/framework";
-import { RemoteQueryFunction } from "@medusajs/framework/types";
-import { ContainerRegistrationKeys } from "@medusajs/framework/utils";
+import { Logger, RemoteQueryFunction } from "@medusajs/framework/types";
+import { ContainerRegistrationKeys, MedusaError } from "@medusajs/framework/utils";
 import { StoreReviewsResponse } from "@starter/types";
-import { GetReviewParamsType } from "./validators";
+import { GetReviewParamsType, StoreCreateReviewType } from "./validators";
+import { createReviewWorkflow } from "src/workflows/review/workflows";
 
 export const GET = async (
-  req: AuthenticatedMedusaRequest<GetReviewParamsType>,
+  req: MedusaRequest<GetReviewParamsType>,
   res: MedusaResponse<StoreReviewsResponse>
 ) => {
+
   const query = req.scope.resolve<RemoteQueryFunction>(
     ContainerRegistrationKeys.QUERY
   );
 
-  const { fields, pagination } = req.remoteQueryConfig;
+  const { product_id } = req.query;
+  const { data: [product] } = await query.graph({
+    entity: "product",
+    fields: ["variants.sku"],
+    filters: {
+      id: product_id as string,
+    },
+  })
+  if (!product) {
+    throw new MedusaError(
+      MedusaError.Types.NOT_FOUND,
+      `Product with id: ${product_id} was not found`
+    )
+  }
+  const variantSkus = product.variants.map(variant => variant.sku)
+
   const { data: reviews, metadata } = await query.graph({
     entity: "review",
-    fields,
-    // TODO: Add filter, ideally by product_id
-    // filters: {
-    //   customer_id: req.auth_context.actor_id,
-    // },
+    fields: ["*"],
+    filters: {
+      variant_sku: variantSkus as string[],
+    },
     pagination: {
-      ...pagination,
-      skip: pagination.skip!,
+      ...req.remoteQueryConfig.pagination
     },
   });
 
@@ -35,4 +52,40 @@ export const GET = async (
     offset: metadata!.skip,
     limit: metadata!.take,
   });
+
+
 };
+
+export const POST = async (
+  req: AuthenticatedMedusaRequest<StoreCreateReviewType>,
+  res: MedusaResponse
+) => {
+  const logger: Logger = req.scope.resolve(ContainerRegistrationKeys.LOGGER);
+  const query = req.scope.resolve(ContainerRegistrationKeys.QUERY);
+  const { data: [customerName] } = await query.graph({
+    entity: "customer",
+    fields: ["first_name", "last_name"],
+    filters: {
+      id: req.auth_context.actor_id as string,
+    },
+  })
+  const { result: createdReview } = await createReviewWorkflow.run({
+    input: { customer_name: `${customerName.first_name} ${customerName.last_name}`, ...req.validatedBody },
+    container: req.scope,
+  });
+
+  const {
+    data: [review],
+  } = await query.graph(
+    {
+      entity: "review",
+      fields: ["*"],
+      filters: { id: createdReview.id },
+    },
+    { throwIfKeyNotFound: true }
+  );
+
+  res.status(201).json({ review });
+
+}
+

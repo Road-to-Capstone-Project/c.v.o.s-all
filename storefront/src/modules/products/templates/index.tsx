@@ -9,17 +9,20 @@ import { notFound } from "next/navigation"
 import React, { Suspense } from "react"
 import ProductActionsWrapper from "./product-actions-wrapper"
 import ProductFacts from "../components/product-facts"
+import { ModuleReview } from "@starter/types"
 
 type ProductTemplateProps = {
   product: HttpTypes.StoreProduct
   region: HttpTypes.StoreRegion
   countryCode: string
+  reviews: ModuleReview[]
 }
 
 const ProductTemplate: React.FC<ProductTemplateProps> = ({
   product,
   region,
   countryCode,
+  reviews,
 }) => {
   if (!product || !product.id) {
     return notFound()
@@ -43,7 +46,7 @@ const ProductTemplate: React.FC<ProductTemplateProps> = ({
         </div>
       </div>
       <div className="content-container">
-        <ProductTabs product={product} />
+        <ProductTabs product={product} reviews={reviews} />
       </div>
       <div
         className="content-container"

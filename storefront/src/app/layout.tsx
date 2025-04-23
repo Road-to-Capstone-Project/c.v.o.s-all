@@ -5,6 +5,7 @@ import { GeistSans } from "geist/font/sans"
 import { Metadata } from "next"
 import NextTopLoader from "nextjs-toploader"
 import "styles/globals.css"
+import '@smastrom/react-rating/style.css'
 
 export const metadata: Metadata = {
   metadataBase: new URL(getBaseURL()),

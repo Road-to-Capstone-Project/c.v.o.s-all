@@ -30,7 +30,9 @@ import {
 } from "@medusajs/framework/utils";
 import { Logger } from "@medusajs/medusa";
 import { RemoteLink } from "@medusajs/modules-sdk";
+import { ModuleCreateReview } from "@starter/types";
 import { jwtDecode } from "jwt-decode";
+import { createReviewsWorkflow } from "src/workflows/review/workflows";
 
 export default async function seedDemoData({ container }: ExecArgs) {
     const logger: Logger = container.resolve(ContainerRegistrationKeys.LOGGER);
@@ -46,11 +48,12 @@ export default async function seedDemoData({ container }: ExecArgs) {
         ModuleRegistrationName.STORE
     );
     const inventoryModuleService = container.resolve(ModuleRegistrationName.INVENTORY)
+    const productModuleService = container.resolve(ModuleRegistrationName.PRODUCT)
+    const customerModuleService = container.resolve(ModuleRegistrationName.CUSTOMER)
 
     const countries = ["gb", "de", "dk", "se", "fr", "es", "it", "vn", "la", "kh"];
     const asia_contries = countries.slice(-3);
     const europe_countries = countries.slice(0, 7);
-
 
     logger.info("Seeding store data...");
     const [store] = await storeModuleService.listStores();
@@ -676,6 +679,7 @@ export default async function seedDemoData({ container }: ExecArgs) {
                     title:
                         '16" Ultra-Slim AI Laptop | 3K OLED | 1.1cm Thin | 6-Speaker Audio',
                     mid_code: "1234567890",
+                    subtitle: "Lenovo",
                     collection_id: collection.id,
                     category_ids: [
                         categoryResult.find((cat) => cat.name === "Laptops")?.id!,
@@ -785,6 +789,7 @@ export default async function seedDemoData({ container }: ExecArgs) {
                 {
                     title: "1080p HD Pro Webcam | Superior Video | Privacy enabled",
                     mid_code: "1234567890",
+                    subtitle: "Logitech",
                     category_ids: [
                         categoryResult.find((cat) => cat.name === "Accessories")?.id!,
                     ],
@@ -884,6 +889,7 @@ export default async function seedDemoData({ container }: ExecArgs) {
                 {
                     title: `6.5" Ultra HD Smartphone | 3x Impact-Resistant Screen`,
                     mid_code: "1234567890",
+                    subtitle: "ACME",
                     collection_id: collection.id,
                     category_ids: [
                         categoryResult.find((cat) => cat.name === "Phones")?.id!,
@@ -993,6 +999,7 @@ export default async function seedDemoData({ container }: ExecArgs) {
                 {
                     title: `34" QD-OLED Curved Gaming Monitor | Ultra-Wide | Infinite Contrast | 175Hz`,
                     mid_code: "1234567890",
+                    subtitle: "HP",
                     collection_id: collection.id,
                     category_ids: [
                         categoryResult.find((cat) => cat.name === "Monitors")?.id!,
@@ -1099,6 +1106,7 @@ export default async function seedDemoData({ container }: ExecArgs) {
                 {
                     title: "Hi-Fi Gaming Headset | Pro-Grade DAC | Hi-Res Certified",
                     mid_code: "1234567890",
+                    subtitle: "JBL",
                     collection_id: collection.id,
                     category_ids: [
                         categoryResult.find((cat) => cat.name === "Accessories")?.id!,
@@ -1201,6 +1209,7 @@ export default async function seedDemoData({ container }: ExecArgs) {
                 {
                     title: "Wireless Keyboard | Touch ID | Numeric Keypad",
                     mid_code: "1234567890",
+                    subtitle: "Aula",
                     category_ids: [
                         categoryResult.find((cat) => cat.name === "Accessories")?.id!,
                     ],
@@ -1299,6 +1308,7 @@ export default async function seedDemoData({ container }: ExecArgs) {
                 {
                     title: "Wireless Rechargeable Mouse | Multi-Touch Surface",
                     mid_code: "1234567890",
+                    subtitle: "Alienware",
                     category_ids: [
                         categoryResult.find((cat) => cat.name === "Accessories")?.id!,
                     ],
@@ -1397,6 +1407,7 @@ export default async function seedDemoData({ container }: ExecArgs) {
                 {
 
                     title: "Conference Speaker | High-Performance | Budget-Friendly",
+                    subtitle: "Sony",
                     category_ids: [
                         categoryResult.find((cat) => cat.name === "Accessories")?.id!,
                     ],
@@ -1496,6 +1507,7 @@ export default async function seedDemoData({ container }: ExecArgs) {
                 {
                     title:
                         'Road 96',
+                    subtitle: "DigixArt",
                     collection_id: collection.id,
                     category_ids: [
                         categoryResult.find((cat) => cat.name === "Action & Adventure")?.id!,
@@ -1643,6 +1655,7 @@ export default async function seedDemoData({ container }: ExecArgs) {
             products: [
                 {
                     title: "The Adventure of Ori",
+                    subtitle: "Moon Studios",
                     collection_id: collection.id,
                     category_ids: [
                         categoryResult.find((cat) => cat.name === "Platformers")?.id!,
@@ -1757,6 +1770,7 @@ export default async function seedDemoData({ container }: ExecArgs) {
             products: [
                 {
                     title: "Minecraft",
+                    subtitle: "Mojang",
                     collection_id: collection.id,
                     category_ids: [
                         categoryResult.find((cat) => cat.name === "Kids & Family")?.id!,
@@ -1901,6 +1915,7 @@ export default async function seedDemoData({ container }: ExecArgs) {
             products: [
                 {
                     title: "XBOX Series X",
+                    subtitle: "Microsoft",
                     category_ids: [
                         categoryResult.find((cat) => cat.name === "Consoles")?.id!,
                     ],
@@ -2101,6 +2116,7 @@ export default async function seedDemoData({ container }: ExecArgs) {
             products: [
                 {
                     title: "Nintendo Switch",
+                    subtitle: "Nintendo",
                     category_ids: [
                         categoryResult.find((cat) => cat.name === "Consoles")?.id!,
                     ],
@@ -2242,6 +2258,85 @@ export default async function seedDemoData({ container }: ExecArgs) {
             }
         });
     logger.info("Finished seeding inventory item data.");
+
+    logger.info("Seeding product review data...");
+    const [productVariantSkus, _] = await productModuleService.listAndCountProductVariants({}, { select: ["sku"] });
+    const [customerNames, customerNameCount] = await customerModuleService.listAndCountCustomers({}, { select: ["first_name", "last_name"] });
+    const sampleProductReviewTitles = [
+        "Great quality, highly recommend!",
+        "Exactly what I was looking for, works perfectly.",
+        "Good value for the price.",
+        "This product exceeded my expectations!",
+        "Very satisfied with this purchase.",
+        "Solid performance, no complaints.",
+        "Great design and easy to use.",
+        "Happy with the quality, would buy again.",
+        "Does the job well, no issues so far.",
+        "Good value for money, definitely worth it.",
+        "Disappointing quality, wouldn't recommend.",
+        "Did not meet my expectations at all.",
+        "Falls short of what was promised.",
+        "Poor build, not worth the money.",
+        "Very frustrating to use, would not buy again.",
+        "Doesn't work as described, very unreliable.",
+        "Arrived damaged, not impressed.",
+        "Overhyped and underperforming.",
+        "Terrible customer service, not worth it.",
+        "Cheap materials, feels flimsy."
+    ];
+    const sampleProductReviewContents = [
+        "The material feels sturdy and durable, making it a solid investment for anyone looking for long-lasting products.",
+        "The functionality is spot on, and it has made my daily routine so much easier.",
+        "For what you're getting, it's a great deal. It's functional and reliable without breaking the bank.",
+        "I wasn't sure if it would deliver, but it does everything it promises and more. Definitely worth every penny.",
+        "It arrived quickly, was easy to set up, and works just as described. Couldn't be happier with my decision.",
+        "Everything works smoothly, and the product does its job efficiently without any hiccups.",
+        "Not only does it look sleek and modern, but it's also intuitive and user-friendly. Definitely a top choice.",
+        "The product is high quality, and after using it for a while, it still looks and works like new.",
+        "I've been using it for a couple of weeks now, and it's been reliable and exactly what I needed.",
+        "It’s a solid, well-built product that provides great features at an affordable price. You get a lot for what you pay.",
+        "The quality feels very poor, and it broke within the first week. I wouldn't trust it for long-term use.",
+        "I had high hopes for this product, but it failed to deliver. The features are lacking, and it didn't work as expected.",
+        "The product's performance doesn't match what was promised in the description. It's slower and less effective than anticipated.",
+        "The build quality feels cheap and flimsy, definitely not worth the price. It started showing signs of wear almost immediately.",
+        "Very disappointed. It’s difficult to use, and the functionality is poor. I expected much better based on the description.",
+        "It malfunctioned after just a few uses. I wouldn't recommend it to anyone who's looking for reliability.",
+        "It arrived damaged, and customer service was no help in resolving the issue. Very poor experience all around.",
+        "I feel like I was misled by all the positive reviews. The product doesn't live up to the hype and has performance issues.",
+        "I reached out to customer support multiple times, but I never got a helpful response. Very frustrating experience.",
+        "The materials feel cheap, and the product doesn't hold up well under regular use. Definitely not worth the price."
+    ];
+    const reviews = productVariantSkus.flatMap(variant => {
+        // Create 2 reviews for each product variant
+        return Array(2).fill(0).map(() => {
+            // Select random customer
+            const randomCustomer = customerNames[Math.floor(Math.random() * customerNameCount)];
+
+            // Select random title and content
+            const randomTitle = sampleProductReviewTitles[Math.floor(Math.random() * sampleProductReviewTitles.length)];
+            const randomContent = sampleProductReviewContents[Math.floor(Math.random() * sampleProductReviewContents.length)];
+
+            // Generate random rating between 1-5
+            const rating = Math.floor(Math.random() * 5) + 1;
+
+            return {
+                variant_sku: variant.sku,
+                customer_name: `${randomCustomer.first_name} ${randomCustomer.last_name}`,
+                title: randomTitle,
+                content: randomContent,
+                rating: rating
+            };
+        });
+    });
+
+    await createReviewsWorkflow(
+        container
+    ).run({
+        input: reviews as ModuleCreateReview[],
+    });
+
+    logger.info("Finished seeding product review data.");
+
     logger.info("Finished seeding store data...");
 
 }

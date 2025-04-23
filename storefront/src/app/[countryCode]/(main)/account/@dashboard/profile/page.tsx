@@ -28,12 +28,12 @@ export default async function Profile() {
         </Heading>
         <ProfileCard customer={customer} />
       </div>
-      <div className="mb-8 flex flex-col gap-y-4">
+      {customer.metadata?.provider !== 'google' && (<div className="mb-8 flex flex-col gap-y-4">
         <Heading level="h2" className="text-lg text-neutral-950">
           Security
         </Heading>
         <SecurityCard customer={customer} />
-      </div>
+      </div>)}
     </div>
   )
 }
