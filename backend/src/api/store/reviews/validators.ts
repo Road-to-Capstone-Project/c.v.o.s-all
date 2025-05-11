@@ -20,6 +20,7 @@ export type StoreCreateReviewType = z.infer<typeof StoreCreateReview>;
 export const StoreCreateReview = z
   .object({
     variant_sku: z.string(),
+    product_id: z.string(),
     title: z.string(),
     content: z.string(),
     rating: z.number().min(1).max(5),

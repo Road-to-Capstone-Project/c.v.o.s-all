@@ -2260,8 +2260,8 @@ export default async function seedDemoData({ container }: ExecArgs) {
     logger.info("Finished seeding inventory item data.");
 
     logger.info("Seeding product review data...");
-    const [productVariantSkus, _] = await productModuleService.listAndCountProductVariants({}, { select: ["sku"] });
-    const [customerNames, customerNameCount] = await customerModuleService.listAndCountCustomers({}, { select: ["first_name", "last_name"] });
+    const [productVariants, _] = await productModuleService.listAndCountProductVariants({}, { select: ["sku", "product_id"] });
+    const [customers, customerCount] = await customerModuleService.listAndCountCustomers({}, { select: ["first_name", "last_name", "id"] });
     const sampleProductReviewTitles = [
         "Great quality, highly recommend!",
         "Exactly what I was looking for, works perfectly.",
@@ -2306,22 +2306,26 @@ export default async function seedDemoData({ container }: ExecArgs) {
         "I reached out to customer support multiple times, but I never got a helpful response. Very frustrating experience.",
         "The materials feel cheap, and the product doesn't hold up well under regular use. Definitely not worth the price."
     ];
-    const reviews = productVariantSkus.flatMap(variant => {
-        // Create 2 reviews for each product variant
-        return Array(2).fill(0).map(() => {
+    const reviews = productVariants.flatMap(variant => {
+        // Create 3000 reviews for each product variant
+        return Array(3000).fill(0).map(() => {
             // Select random customer
-            const randomCustomer = customerNames[Math.floor(Math.random() * customerNameCount)];
-
-            // Select random title and content
-            const randomTitle = sampleProductReviewTitles[Math.floor(Math.random() * sampleProductReviewTitles.length)];
-            const randomContent = sampleProductReviewContents[Math.floor(Math.random() * sampleProductReviewContents.length)];
+            const randomCustomer = customers[Math.floor(Math.random() * customerCount)];
 
             // Generate random rating between 1-5
-            const rating = Math.floor(Math.random() * 5) + 1;
+            const rating = Math.round((Math.random() * 4 + 1) * 10) / 10;
+
+            // Select random title and content
+            const randomTitle = rating >= 3 ? sampleProductReviewTitles.slice(0, 10)[Math.floor(Math.random() * 10)] : sampleProductReviewTitles.slice(10)[Math.floor(Math.random() * 10)];
+            const randomContent = rating >= 3 ? sampleProductReviewContents.slice(0, 10)[Math.floor(Math.random() * 10)] : sampleProductReviewContents.slice(10)[Math.floor(Math.random() * 10)];
+
+
 
             return {
                 variant_sku: variant.sku,
+                product_id: variant.product_id,
                 customer_name: `${randomCustomer.first_name} ${randomCustomer.last_name}`,
+                customer_id: randomCustomer.id,
                 title: randomTitle,
                 content: randomContent,
                 rating: rating

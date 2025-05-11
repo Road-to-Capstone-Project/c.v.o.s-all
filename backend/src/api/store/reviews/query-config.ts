@@ -1,5 +1,7 @@
 export const reviewFields = [
   "id",
+  "customer_id",
+  "product_id",
   "content",
   "variant_sku",
   "customer_name",

@@ -60,18 +60,16 @@ export const POST = async (
   req: AuthenticatedMedusaRequest<StoreCreateReviewType>,
   res: MedusaResponse
 ) => {
-  const logger: Logger = req.scope.resolve(ContainerRegistrationKeys.LOGGER);
   const query = req.scope.resolve(ContainerRegistrationKeys.QUERY);
-  const { data: [customerName] } = await query.graph({
+  const { data: [customer] } = await query.graph({
     entity: "customer",
-    fields: ["first_name", "last_name"],
+    fields: ["first_name", "last_name", "id"],
     filters: {
       id: req.auth_context.actor_id as string,
     },
   })
   const { result: createdReview } = await createReviewWorkflow.run({
-    input: { customer_name: `${customerName.first_name} ${customerName.last_name}`, ...req.validatedBody },
-    container: req.scope,
+    input: { customer_name: `${customer.first_name} ${customer.last_name}`, customer_id: customer.id, ...req.validatedBody }, container: req.scope,
   });
 
   const {

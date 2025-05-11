@@ -4,9 +4,11 @@ import { storeCompaniesMiddlewares } from "./companies/middlewares";
 import { storeFreeShippingMiddlewares } from "./free-shipping/middlewares";
 import { storeQuotesMiddlewares } from "./quotes/middlewares";
 import { storeReviewsMiddlewares } from "./reviews/middlewares";
+import { storeRecommendedProducListMiddlewares } from "./recommended-products/middlewares";
 
 export const storeMiddlewares: MiddlewareRoute[] = [
   ...storeReviewsMiddlewares,
+  ...storeRecommendedProducListMiddlewares,
   ...storeCartsMiddlewares,
   ...storeCompaniesMiddlewares,
   ...storeQuotesMiddlewares,
