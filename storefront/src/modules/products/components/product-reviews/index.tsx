@@ -22,6 +22,7 @@ export default function ProductReviews({
 
     const handleSubmit = async (formData: FormData) => {
         formData.append("rating", rating.toString())
+        formData.append("product_id", product.id)
         if (formData.get("variant_sku") === "none") {
             setErrorMessage("Please select a variant")
             return

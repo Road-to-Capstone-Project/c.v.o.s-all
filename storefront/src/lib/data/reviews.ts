@@ -18,7 +18,7 @@ export const listReviewsWithSort = async (query?: ReviewFilterParams) => {
     }
 
     return sdk.client.fetch<StoreReviewsResponse>(
-        `/store/reviews?order=-updated_at`,
+        `/store/reviews?order=-updated_at&limit=5`,
         {
             method: "GET",
             query,
@@ -35,9 +35,11 @@ export const createReview = async (_currentState: unknown, formData: FormData) =
     let networkMessage
     const data: StoreCreateReview = {
         variant_sku: formData.get("variant_sku") as string,
+        product_id: formData.get("product_id") as string,
         title: formData.get("title") as string,
         content: formData.get("content") as string,
         rating: Number(formData.get("rating")),
+
     }
     try {
         const { review } = await sdk.client.fetch<StoreReviewResponse>(

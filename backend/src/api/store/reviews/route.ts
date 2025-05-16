@@ -1,6 +1,5 @@
 import {
   AuthenticatedMedusaRequest,
-  logger,
   MedusaRequest,
   MedusaResponse,
 } from "@medusajs/framework";

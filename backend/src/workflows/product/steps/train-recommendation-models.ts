@@ -1,5 +1,4 @@
 import { createStep } from "@medusajs/framework/workflows-sdk";
-import { REVIEW_MODULE } from "src/modules/review";
 
 export const trainRecommendationModelsStep = createStep(
     "train-recommendation-models",

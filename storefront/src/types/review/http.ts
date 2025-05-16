@@ -16,6 +16,7 @@ export type StoreReviewResponse = {
 
 export type StoreCreateReview = {
     title: string;
+    product_id: string;
     content?: string | null;
     variant_sku: string;
     rating: number;

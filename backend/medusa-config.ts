@@ -1,6 +1,7 @@
 import { REVIEW_MODULE } from "./src/modules/review";
 import { QUOTE_MODULE } from "./src/modules/quote";
 import { loadEnv, defineConfig, Modules, ContainerRegistrationKeys } from "@medusajs/framework/utils";
+import { RELATED_PRODUCT_MODULE } from "src/modules/related-product";
 
 
 // Load environment variables
@@ -28,6 +29,9 @@ module.exports = defineConfig({
     },
     [REVIEW_MODULE]: {
       resolve: "./modules/review",
+    },
+    [RELATED_PRODUCT_MODULE]: {
+      resolve: "./modules/related-product"
     },
     [Modules.CACHE]: {
       resolve: "@medusajs/medusa/cache-inmemory",
@@ -120,6 +124,15 @@ module.exports = defineConfig({
           },
         ],
       }
+    },
+  },
+  admin: {
+    vite: () => {
+      return {
+        server: {
+          allowedHosts: ['.shining-constantly-dove.ngrok-free.app'], // replace ".medusa-server-testing.com" with ".yourdomain.com"
+        },
+      };
     },
   },
 });

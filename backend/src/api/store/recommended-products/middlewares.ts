@@ -16,4 +16,11 @@ export const storeRecommendedProducListMiddlewares: MiddlewareRoute[] = [
       validateAndTransformQuery(GetRecommendedProducListParams, listRecommendedProductsTransformQueryConfig),
     ],
   },
+  {
+    method: ["GET"],
+    matcher: "/store/recommended-products/:id",
+    middlewares: [
+      validateAndTransformQuery(GetRecommendedProducListParams, listRecommendedProductsTransformQueryConfig),
+    ],
+  },
 ];
