@@ -21,6 +21,9 @@ module.exports = defineConfig({
     },
   },
   modules: {
+    storeAnalyticsModuleService: {
+      resolve: "./modules/store-analytics"
+    },
     companyModuleService: {
       resolve: "./modules/company",
     },
@@ -135,6 +138,12 @@ module.exports = defineConfig({
       };
     },
   },
+  // plugins: [
+  //   {
+  //     resolve: "@rsc-labs/medusa-store-analytics-v2",
+  //     options: {}
+  //   }
+  // ],
 });
 
 
