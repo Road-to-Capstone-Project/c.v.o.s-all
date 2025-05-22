@@ -4,7 +4,7 @@ import { HttpTypes } from "@medusajs/types"
 import { ModuleReview } from "@starter/types"
 import { getFirstChars } from "@lib/util/get-first-chars"
 import { SubmitButton } from "@modules/checkout/components/submit-button"
-import { useActionState, useState } from "react"
+import { useActionState, useEffect, useState } from "react"
 import ErrorMessage from "@modules/checkout/components/error-message"
 import { createReview } from "@lib/data/reviews"
 
@@ -15,9 +15,9 @@ export default function ProductReviews({
     product: HttpTypes.StoreProduct
     reviews: ModuleReview[] | undefined
 }) {
-    const [message, formAction] = useActionState(createReview, null)
+    const [error, formAction] = useActionState(createReview, null)
     const [rating, setRating] = useState(0);
-    const [errorMessage, setErrorMessage] = useState(message);
+    const [errorMessage, setErrorMessage] = useState(error?.message || null);
     const [isReadOnly, setIsReadOnly] = useState(false);
 
     const handleSubmit = async (formData: FormData) => {
@@ -31,20 +31,18 @@ export default function ProductReviews({
             setErrorMessage("Please select a rating")
             return
         }
-        // alert(JSON.stringify(Object.fromEntries(formData.entries())))
         setIsReadOnly(true)
         await formAction(formData)
-        // alert(message)
-        if (message) {
-            setErrorMessage(message)
-        } else {
-            setErrorMessage(null)
-            setRating(0)
-            toast.success("Review posted successfully!")
-        }
         setIsReadOnly(false)
-
     }
+
+    useEffect(() => {
+        if (error?.status === 406 || error?.status === 500) {
+            toast.error(error?.message)
+        } else if (error?.status === 201) {
+            toast.success(error?.message)
+        }
+    }, [error])
 
     return (
         <div className="w-full bg-neutral-100 rounded-lg border p-2 my-4">

@@ -11,7 +11,7 @@ export default async function FeaturedProducts({
   countryCode: string
 }) {
   const customer = await retrieveCustomer()
-  const customerOrderCount = (await listOrders()).filter((order) => order.fulfillment_status === "delivered").length
+  const customerOrderCount = customer ? (await listOrders()).filter((order) => order.fulfillment_status === "delivered").length : 0;
   const { collections } = await listCollections({
     limit: "3",
     fields: "*products",

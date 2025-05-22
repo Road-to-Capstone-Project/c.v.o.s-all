@@ -7,6 +7,7 @@ import {
 } from "@starter/types"
 import { getAuthHeaders, getCacheOptions, getCacheTag } from "@lib/data/cookies"
 import { revalidateTag } from "next/cache"
+import { FetchError } from "@medusajs/js-sdk"
 
 export const listReviewsWithSort = async (query?: ReviewFilterParams) => {
     const headers = {
@@ -32,7 +33,6 @@ export const createReview = async (_currentState: unknown, formData: FormData) =
     const headers = {
         ...(await getAuthHeaders()),
     }
-    let networkMessage
     const data: StoreCreateReview = {
         variant_sku: formData.get("variant_sku") as string,
         product_id: formData.get("product_id") as string,
@@ -52,11 +52,13 @@ export const createReview = async (_currentState: unknown, formData: FormData) =
         )
         const cacheTag = await getCacheTag("reviews")
         revalidateTag(cacheTag)
-        networkMessage = "ok"
     }
     catch (error: any) {
-        networkMessage = error.toString()
+        if (error instanceof FetchError) {
+            return { status: error.status, message: error.message }
+        } else {
+            return { status: 201, message: "Review posted successfully!" }
+        }
     }
-    return networkMessage
 
 }
