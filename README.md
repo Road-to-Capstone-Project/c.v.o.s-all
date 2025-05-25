@@ -88,16 +88,21 @@ cd c.v.o.s-all
 cd c.v.o.s-all/backend # or cd c.v.o.s-all/storefront
 yarn install
 
-# 5. Setup the database:
+# 5. Generate migration files
+npx medusa db:generate related-product
+npx medusa db:generate Review   
+
+# 6. Setup the database:
 npx medusa db:setup --db c.v.o.s
 
-# 6. Start the C.V.O.S application (IN BOTH backend & storefront directory):
+# 7. Start the C.V.O.S application (IN BOTH backend & storefront directory):
 cd c.v.o.s-all/backend # or cd c.v.o.s-all/storefront
 yarn dev
 
-# 7. Seed the database with mock data
-cd c.v.o.s-all
-yarn seed
+# 8. Seed the database with mock data (the backend must be started when seeding)
+cd c.v.o.s-all/backend
+yarn seed-business
+yarn seed-AI
 ```
 
 #### Setup publishable key (fix initial `storefront` error)
@@ -117,8 +122,8 @@ yarn dev
 
 Visit the following links to see the C.V.O.S storefront & admin
 
-- [Admin](http://localhost:9000/app)
-- [Storefront](http://localhost:8000)
+- [Admin](http://domain21110776.ddns.net:9000/app)
+- [Storefront](http://domain21110776.ddns.net:8000/vn)
 
 &nbsp;
 

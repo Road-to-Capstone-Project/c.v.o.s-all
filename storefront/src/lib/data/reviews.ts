@@ -1,3 +1,4 @@
+"use server"
 import { sdk } from "@lib/config"
 import {
     ReviewFilterParams,

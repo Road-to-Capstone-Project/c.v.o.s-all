@@ -5,7 +5,6 @@ import { useCallback } from "react"
 
 import SortProducts, { SortOptions } from "./sort-products"
 import { Container } from "@medusajs/ui"
-import SearchInResults from "./search-in-results"
 import { HttpTypes } from "@medusajs/types"
 import CategoryList from "./category-list"
 

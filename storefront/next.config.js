@@ -48,6 +48,22 @@ const nextConfig = {
         protocol: "https",
         hostname: `${process.env.SUPABASE_UNIQUE_ID}.supabase.co`,
       },
+      {
+        protocol: "https",
+        hostname: "media.direct.playstation.com",
+      },
+      {
+        protocol: "https",
+        hostname: "gamesir.com",
+      },
+      {
+        protocol: "https",
+        hostname: "assets.xboxservices.com",
+      },
+      {
+        protocol: "https",
+        hostname: "dlcdnwebimgs.asus.com",
+      },
     ],
   },
 }

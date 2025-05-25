@@ -12,3 +12,8 @@ export type ModuleCreateRelatedProduct = {
     query_product_id: string,
     copurchase_frequency: number
 };
+
+export type ModuleUpdateRelatedProduct = {
+    id: string;
+    copurchase_frequency?: number;
+};

@@ -62,8 +62,9 @@ export default async function seedDemoData({ container }: ExecArgs) {
         "The materials feel cheap, and the product doesn't hold up well under regular use. Definitely not worth the price."
     ];
     const reviews = productVariants.flatMap(variant => {
-        // Create 3000 reviews for each product variant
-        return Array(3000).fill(0).map(() => {
+        const randomNumsOfReview = Math.floor(Math.random() * (1800 - 1500 + 1)) + 1500;
+        // Create reviews for each product variant
+        return Array(randomNumsOfReview).fill(0).map(() => {
             // Select random customer
             const randomCustomer = customers[Math.floor(Math.random() * customerCount)];
 
